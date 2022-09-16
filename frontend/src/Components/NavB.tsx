@@ -13,13 +13,13 @@ function NavB(){
     return(
         <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Container>
-                <Navbar.Brand href="#">UR Elige</Navbar.Brand>
+                <Navbar.Brand href="/">UR Elige</Navbar.Brand>
                     <Form className="form_pos">
                         <Button variant="secondary">Consultar Estadisticas</Button>{' '}
                     </Form>
                     <Nav>
-                        <Nav.Link href="#deets">Log In</Nav.Link>
-                        <Nav.Link href="#memes">Sign Up</Nav.Link>
+                        <Nav.Link href="/logIn">Log In</Nav.Link>
+                        <Nav.Link href="/signUp">Sign Up</Nav.Link>
                     </Nav>
             </Container>
         </Navbar>
