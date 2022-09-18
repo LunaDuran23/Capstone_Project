@@ -32,6 +32,7 @@ class UserUpdate(UserBase, metaclass=AllOptional):
 # Replies only name and username
 
 
-class UserOut(BaseModel):
-    name: str = Field(...)
-    surname: str = Field(...)
+class UserOut(UserDB):
+    class Config:
+        fields = {'password': {'exclude': True},
+                  'id': {'exclude': True}}

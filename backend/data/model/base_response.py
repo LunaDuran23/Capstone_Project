@@ -9,3 +9,4 @@ T = TypeVar("T")
 class BaseResponse(GenericModel, Generic[T]):
     success: bool = Field(...)
     payload: Optional[T]
+    msg: Optional[str] = Field("")

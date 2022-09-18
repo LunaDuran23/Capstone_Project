@@ -1,24 +1,32 @@
 from fastapi import FastAPI
 from dotenv import dotenv_values
 from pymongo import MongoClient
-from backend.routes.auth import router as auth_router
+from backend.common.common import API_PREFIX, AUTH_PREFIX, USER_PREFIX
+from backend.common.types import FastAPIWithDB
+from backend.routes import auth_router, user_router
 from fastapi import APIRouter
-from pymongo.errors import OperationFailure
 
 globalRouter = APIRouter()
 config = dotenv_values(".env")
-app = FastAPI()
+app = FastAPIWithDB()
 
 
 @app.on_event("startup")
 def startup_db_client():
+    # Check for env variables
+    if (
+            config["DB_NAME"] is None or
+            config["DB_USER"] is None or
+            config["DB_USER_PASS"] is None or
+            config["SECRET_KEY_HEX"] is None):
+        raise RuntimeError("Missing environment variables! Refer to readme.md")
     app.mongodb_client = MongoClient(config["MONGO_URI"],
                                      username=config["DB_USER"],
                                      password=config["DB_USER_PASS"],
                                      authSource=config["DB_NAME"])
 
     app.database = app.mongodb_client[config["DB_NAME"]]
-    app.mongodb_client.auth
+
     helloresp = app.mongodb_client.admin.command("hello")
 
     if not helloresp["isWritablePrimary"]:
@@ -27,6 +35,7 @@ def startup_db_client():
     if helloresp["readOnly"]:
         raise RuntimeError("Database is readonly!")
 
+    app.secret_key = config["SECRET_KEY_HEX"]
     print("Connected to the MongoDB database!")
 
 
@@ -36,6 +45,11 @@ def shutdown_db_client():
 
 
 globalRouter.include_router(
-    auth_router, tags=["auth"], prefix="/auth")
+    auth_router, tags=["auth"], prefix=AUTH_PREFIX
+)
 
-app.include_router(globalRouter, prefix="/api")
+globalRouter.include_router(
+    user_router, tags=["user"], prefix=USER_PREFIX
+)
+
+app.include_router(globalRouter, prefix=API_PREFIX)

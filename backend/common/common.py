@@ -1,0 +1,24 @@
+'''
+AUTH OPTIONS
+'''
+
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
+TOKEN_URL = "token"
+JWT_ALGORITHM = "HS256"
+
+
+'''
+DATABASE NAMING
+'''
+
+AUTH_USER_COLLECTION = "users"
+
+'''
+API PATHS
+'''
+# api prefix
+API_PREFIX = "/api"
+
+# API PREFIXES
+AUTH_PREFIX = "/auth"
+USER_PREFIX = "/user"
