@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
-import Card from 'react-bootstrap/Card';
 import { Grid } from "@material-ui/core/";
 import './App.css'
 
 import NavB from './NavB';
+import Container from './Container';
 
 import CEICT from './images/CEICT.png';
 import CECN from './images/CECN.png';
@@ -40,16 +40,7 @@ const Home = () =>{
         <div className='margin'>
         <Grid container direction={'row'} spacing={0}>
         {faculty.map((item, index) => (
-            <Grid item xs={4} > 
-                    <Card onClick={() => navigate(item.route)} className='card_h'>
-                        <Card.Img src={item.img} variant='top'/>
-                        <Card.Body>
-                            <Card.Title className='title_style'>
-                                    {item.name}
-                            </Card.Title>
-                        </Card.Body>
-                    </Card>
-            </Grid>))}
+            <Container data={item} />))}
         </Grid>  
         </div>  
         </>

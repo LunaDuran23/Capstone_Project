@@ -15,6 +15,8 @@ import Psicologia from './Components/faculty/Psicologia';
 import Rehab from './Components/faculty/Rehab';
 import RRII from './Components/faculty/RRII';
 
+import Oliva from './Components/faculty/CEICT/Oliva';
+
 function App() {
   return (
     <Router>
@@ -33,6 +35,8 @@ function App() {
             <Route path="/rehabilitacion" element={<Rehab />} />
             <Route path="/psicologia" element={<Psicologia />} />
             <Route path="/RRII" element={<RRII />} />
+
+            <Route path="/CEICT/oliva" element={<Oliva />} />
         </Routes>
     </Router>
   );
