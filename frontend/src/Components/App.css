@@ -6,11 +6,17 @@ body{
   padding-left: 650px;
 }
 
-.card_pos{
+.pos{
   padding-top: 70px;
-  padding-left: 20px;
-  width: 5rem;
+  padding-left: 50px;
+  width: 18rem;
   display: block;
+}
+
+.margin{
+  margin-top: 80px;
+  margin-left: 80px;
+  margin-right: 80px;
 }
 
 .card_h{
@@ -19,11 +25,11 @@ body{
   display: block;
   top: 0px;
   position: relative;
-  width: 300px;
+  width: 350px;
   background-color: #f2f8f9;
   border-radius: 4px;
-  padding: 20px 20px;
-  margin: 5px;
+  padding: 32px 24px;
+  margin: 12px;
   text-decoration: none;
   z-index: 0;
   overflow: hidden;
@@ -34,10 +40,8 @@ body{
   content: "";
   position: absolute;
   z-index: -1;
-  top: -16px;
-  right: -16px;
-  height: 32px;
-  width: 32px;
+  height: 30px;
+  width: 30px;
   border-radius: 32px;
   transform: scale(2);
   transform-origin: 50% 50%;
@@ -46,11 +50,10 @@ body{
 
 .card_h:hover{
   transition: all 0.2s ease-out;
-  box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
-  top: -4px;
-  border: 1px solid #cccccc;
-  background-color: white;
-  opacity: 1;
+    box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
+    top: -4px;
+    border: 1px solid #cccccc;
+    background-color: white;
 }
 
 .card_h:hover:before {

@@ -18,7 +18,7 @@ import Psicologia from './images/psicologia.png';
 import Rehab from './images/rehab.png';
 import RRII from './images/RRII.png';
 
-const faculty = [{img: CEICT, name: 'Consejo Estudiantil de la Escuela de Ingeniería, Ciencia y Tecnología (CEICT)', route: '/CEICT'},
+const faculty = [{img: CEICT, name: 'Consejo Estudiantil de la Escuela de Ingeniería, Ciencia y Tecnología', route: '/CEICT'},
                 {img: CECN, name: 'Consejo Estudiantil de Ciencias Naturales', route:'/CECN'},
                 {img: Creacion, name: 'Consejo Estudiantil de Creación', route:'/creacion'},
                 {img: Econ, name: 'Consejo Estudiantil de Economía', route:'/economia'},
@@ -37,21 +37,21 @@ const Home = () =>{
     return(
         <>
         <NavB/>
-        <Grid container spacing={3}>
+        <div className='margin'>
+        <Grid container direction={'row'} spacing={0}>
         {faculty.map((item, index) => (
-            <Grid item xs={3} > 
-                    <div className="card_pos" key={index}>
-                        <Card onClick={() => navigate(item.route)} className='card_h'>
-                            <Card.Img src={item.img} variant='top'/>
-                                <Card.Body>
-                                <Card.Title className='title_style'>
-                                        {item.name}
-                                </Card.Title>
-                            </Card.Body>
-                        </Card>
-                    </div>
+            <Grid item xs={4} > 
+                    <Card onClick={() => navigate(item.route)} className='card_h'>
+                        <Card.Img src={item.img} variant='top'/>
+                        <Card.Body>
+                            <Card.Title className='title_style'>
+                                    {item.name}
+                            </Card.Title>
+                        </Card.Body>
+                    </Card>
             </Grid>))}
-        </Grid>    
+        </Grid>  
+        </div>  
         </>
     );
 }
