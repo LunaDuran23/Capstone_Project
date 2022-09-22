@@ -7,7 +7,7 @@ import {
     TextField,
     Button,
   } from "@material-ui/core";
-import { useState } from "react"; 
+  import { useState, useEffect } from "react"; 
 import './SignUp.css'
 
 
@@ -21,17 +21,56 @@ const useStyles = makeStyles((theme) => ({
   },
 })); 
 
-
-
 function SignUp(){
+    const initialValues = { username: "", email: "", password: "" };
+    const [formValues, setFormValues] = useState(initialValues);
+    const [formErrors, setFormErrors] = useState({username:"",email:"",password:""});
+    const [isSubmit, setIsSubmit] = useState(false);  
     const { heading, submitButton } = useStyles();
-
     const [json] = useState<string>();
+
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormValues({ ...formValues, [name]: value });
+    };
   
-    return ( <Container>
-        <NavB/>,
-      {/* <Container maxWidth="xs"> */}
-      <Container className="formulary" maxWidth="xs">      
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      setFormErrors(validate(formValues));
+      setIsSubmit(true);
+    };
+  
+    useEffect(() => {
+      console.log(formErrors);
+      if (Object.keys(formErrors).length === 0 && isSubmit) {
+        console.log(formValues);
+      }
+    }, [formValues, formErrors, isSubmit]);
+    
+    const validate = (values) => {
+      const errors = {username: "", email:"",password:""};
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+      if (!values.username) {
+        errors.username = "Username is required!";
+      }
+      if (!values.email) {
+        errors.email = "Email is required!";
+      } else if (!regex.test(values.email)) {
+        errors.email = "This is not a valid email format!";
+      }
+      if (!values.password) {
+        errors.password = "Password is required";
+      } else if (values.password.length < 4) {
+        errors.password = "Password must be more than 4 characters";
+      } else if (values.password.length > 10) {
+        errors.password = "Password cannot exceed more than 10 characters";
+      }
+      return errors;
+    };
+
+    return ( 
+      <Container id="formulary_ext">
+      <Container id = "formulary_int">      
         <Typography className={heading} variant="h3">
           Sign Up 
         </Typography>
