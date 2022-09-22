@@ -1,83 +1,102 @@
 import React from 'react';
 import NavB from './NavB';
-import {
-    makeStyles,
-    Container,
-    Typography,
-    TextField,
-    Button,
-  } from "@material-ui/core";
-import { useState } from "react"; 
+
+import { useState, useEffect } from "react"; 
 import './LogIn.css'
 
-const useStyles = makeStyles((theme) => ({
-    heading: {
-      textAlign: "center",
-      margin: theme.spacing(1, 0, 4),
-    },
-    submitButton: {
-      marginTop: theme.spacing(4),
-    },
-  })); 
-  
 
 function LogIn(){
-    const { heading, submitButton } = useStyles();
+  const initialValues = { username: "", email: "", password: "" };
+  const [formValues, setFormValues] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({username:"",email:"",password:""});
+  const [isSubmit, setIsSubmit] = useState(false);
 
-    const [json] = useState<string>();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
 
-    return(
-    <Container>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setFormErrors(validate(formValues));
+    setIsSubmit(true);
+  };
+
+  useEffect(() => {
+    console.log(formErrors);
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(formValues);
+    }
+  }, [formErrors]);
+
+  const validate = (values) => {
+    const errors = {username: "", email:"",password:""};
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    if (!values.username) {
+      errors.username = "Username is required!";
+    }
+    if (!values.email) {
+      errors.email = "Email is required!";
+    } else if (!regex.test(values.email)) {
+      errors.email = "This is not a valid email format!";
+    }
+    if (!values.password) {
+      errors.password = "Password is required";
+    } else if (values.password.length < 4) {
+      errors.password = "Password must be more than 4 characters";
+    } else if (values.password.length > 10) {
+      errors.password = "Password cannot exceed more than 10 characters";
+    }
+    return errors;
+  };
+
+
+    return (
+      <div id = "formulary_ext">
         <NavB/>,
-        <Container className="formulary" maxWidth="xs">      
-        <Typography className={heading} variant="h3">
-          Login
-        </Typography>
-        <form>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            label="Email"
-            fullWidth
-            required
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            label="First Name"
-            fullWidth
-            required
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            label="Password"
-            type="password"
-            fullWidth
-            required
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={submitButton}
-          >
-            Sign Up
-          </Button>
-          {json && (
-            <>
-              <Typography variant="body1">
-                Below is the JSON that would normally get passed to the server
-                when a form gets submitted
-              </Typography>
-              <Typography variant="body2">{json}</Typography>
-            </>
-          )}
+        <div id = "formulary_int">
+        <form onSubmit={handleSubmit}>
+          <h1>Login Form</h1>
+          <div className="ui divider"></div>
+          <div className="ui form">
+            <div className="field">
+              <label>Username</label>
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                value={formValues.username}
+                onChange={handleChange}
+              />
+            </div>
+            <p>{formErrors.username}</p>
+            <div className="field">
+              <label>Email</label>
+              <input
+                type="text"
+                name="email"
+                placeholder="Email"
+                value={formValues.email}
+                onChange={handleChange}
+              />
+            </div>
+            <p>{formErrors.email}</p>
+            <div className="field">
+              <label>Password</label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={formValues.password}
+                onChange={handleChange}
+              />
+            </div>
+            <p>{formErrors.password}</p>
+            <button className="fluid ui button blue">Submit</button>
+          </div>
         </form>
-      </Container>
-
-    </Container>
+        </div>
+      </div>
     );
 }
 
