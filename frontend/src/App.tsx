@@ -1,21 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import FacultyInfo from './Components/FacultyInfo';
+import ListInfo from './Components/ListInfo';
+
 import Home from './Components/Home';
 import LogIn from './Components/LogIn';
 import SignUp from './Components/SignUp';
-import CEICT from './Components/faculty/CEICT';
-import CECN from './Components/faculty/CECN';
-import Creacion from './Components/faculty/Creacion'
-import Economia from './Components/faculty/Economia';
-import GDU from './Components/faculty/GDU';
-import Humanas from './Components/faculty/Humanas';
-import Juris from './Components/faculty/Juris';
-import Medicina from './Components/faculty/Medicina';
-import Psicologia from './Components/faculty/Psicologia';
-import Rehab from './Components/faculty/Rehab';
-import RRII from './Components/faculty/RRII';
-
-import Oliva from './Components/faculty/CEICT/Oliva';
 
 function App() {
   return (
@@ -24,19 +15,32 @@ function App() {
             <Route path="/" element = {<Home />} />
             <Route path="/logIn" element={<LogIn />} />
             <Route path="/signUp" element={<SignUp />} />
-            <Route path="/CEICT" element={<CEICT />} />
-            <Route path="/CECN" element={<CECN />} />
-            <Route path="/economia" element={<Economia />} />
-            <Route path="/creacion" element={<Creacion />} />
-            <Route path="/ciencia-politica-gdu" element={<GDU />} />
-            <Route path="/ciencias-humanas" element={<Humanas />} />
-            <Route path="/jurisprudencia" element={<Juris />} />
-            <Route path="/medicina" element={<Medicina />} />
-            <Route path="/rehabilitacion" element={<Rehab />} />
-            <Route path="/psicologia" element={<Psicologia />} />
-            <Route path="/RRII" element={<RRII />} />
 
-            <Route path="/CEICT/oliva" element={<Oliva />} />
+            <Route path="/CEICT" element={<FacultyInfo faculty={{name: 'EICT'}} />} />
+            <Route path="/creacion" element={<FacultyInfo faculty={{name: 'creacion'}} />} />
+            <Route path="/ciencia-politica-gdu" element={<FacultyInfo faculty={{name: 'gdu'}} />} />
+            <Route path="/ciencias-humanas" element={<FacultyInfo faculty={{name: 'humanas'}} />} />
+            <Route path="/jurisprudencia" element={<FacultyInfo faculty={{name: 'juris'}} />} />
+            <Route path="/RRII" element={<FacultyInfo faculty={{name: 'RRII'}} />} />
+
+            <Route path="/CEICT/verde" element={<ListInfo data={{faculty: 'CEICT', name:'verde'}}/>}/>
+            <Route path="/CEICT/roja" element={<ListInfo data={{faculty: 'CEICT', name:'roja'}}/>}/>
+            <Route path="/CEICT/azul" element={<ListInfo data={{faculty: 'CEICT', name:'azul'}}/>}/>
+            <Route path="/creacion/verde" element={<ListInfo data={{faculty: 'creacion', name:'verde'}}/>}/>
+            <Route path="/creacion/roja" element={<ListInfo data={{faculty: 'creacion', name:'roja'}}/>}/>
+            <Route path="/creacion/azul" element={<ListInfo data={{faculty: 'creacion', name:'azul'}}/>}/>
+            <Route path="/ciencia-politica-gdu/verde" element={<ListInfo data={{faculty: 'gdu', name:'verde'}}/>}/>
+            <Route path="/ciencia-politica-gdu/roja" element={<ListInfo data={{faculty: 'gdu', name:'roja'}}/>}/>
+            <Route path="/ciencia-politica-gdu/azul" element={<ListInfo data={{faculty: 'gdu', name:'azul'}}/>}/>
+            <Route path="/ciencias-humanas/verde" element={<ListInfo data={{faculty: 'humanas', name:'verde'}}/>}/>
+            <Route path="/ciencias-humanas/roja" element={<ListInfo data={{faculty: 'humanas', name:'roja'}}/>}/>
+            <Route path="/ciencias-humanas/azul" element={<ListInfo data={{faculty: 'humanas', name:'azul'}}/>}/>
+            <Route path="/jurisprudencia/verde" element={<ListInfo data={{faculty: 'juris', name:'verde'}}/>}/>
+            <Route path="/jurisprudencia/roja" element={<ListInfo data={{faculty: 'juris', name:'roja'}}/>}/>
+            <Route path="/jurisprudencia/azul" element={<ListInfo data={{faculty: 'juris', name:'azul'}}/>}/>
+            <Route path="/RRII/verde" element={<ListInfo data={{faculty: 'RRII', name:'verde'}}/>}/>
+            <Route path="/RRII/roja" element={<ListInfo data={{faculty: 'RRII', name:'roja'}}/>}/>
+            <Route path="/RRII/azul" element={<ListInfo data={{faculty: 'RRII', name:'azul'}}/>}/>
         </Routes>
     </Router>
   );
