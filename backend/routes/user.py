@@ -3,18 +3,28 @@ from fastapi import APIRouter, Depends, Body, HTTPException, status
 from backend.common.common import AUTH_USER_COLLECTION
 from backend.common.types import RequestWithDB
 from backend.data.model.base_response import BaseResponse
-from backend.data.model.user import UserUpdate
+from backend.data.model.user import UserOut, UserUpdate
 from backend.routes.middlewares import authenticated_user
-from backend.data.model import UserToken
+from backend.data.model import UserOut, UserToken
+from typing import Optional
 
 router = APIRouter()
 
 
 @router.get("/me/",
-            response_model=UserToken,
-            response_model_exclude_none=True,)
-async def read_users_me(current_user: UserToken = Depends(authenticated_user)):
-    return current_user
+            response_model=Optional[UserOut],
+            response_model_exclude_none=True,
+            )
+def read_users_me(request: RequestWithDB, current_user: UserToken = Depends(authenticated_user)):
+    # find user
+    user = request.app.database[AUTH_USER_COLLECTION].find_one(
+        {"email": current_user.email
+         })
+
+    if user is None:
+        return None
+
+    return user
 
 
 @router.put("/update/",
