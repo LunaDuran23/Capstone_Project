@@ -1,10 +1,11 @@
-from fastapi import FastAPI
 from dotenv import dotenv_values
 from pymongo import MongoClient
-from backend.common.common import API_PREFIX, AUTH_PREFIX, USER_PREFIX
+from backend.common.common import API_PREFIX, AUTH_PREFIX, USER_PREFIX, INFO_PREFIX, VOTING_PREFIX
 from backend.common.types import FastAPIWithDB
-from backend.routes import auth_router, user_router
+from backend.utils.unique_initialize_db import initialize_unique_indexes
+from backend.routes import auth_router, user_router, votinginforouter, votingrouter
 from fastapi import APIRouter
+from fastapi.staticfiles import StaticFiles
 
 globalRouter = APIRouter()
 config = dotenv_values(".env")
@@ -20,12 +21,12 @@ def startup_db_client():
             config["DB_USER_PASS"] is None or
             config["SECRET_KEY_HEX"] is None):
         raise RuntimeError("Missing environment variables! Refer to readme.md")
-    app.mongodb_client = MongoClient(config["MONGO_URI"],
+    app.set_mongo_client(MongoClient(config["MONGO_URI"],
                                      username=config["DB_USER"],
                                      password=config["DB_USER_PASS"],
-                                     authSource=config["DB_NAME"])
+                                     authSource=config["DB_NAME"]))
 
-    app.database = app.mongodb_client[config["DB_NAME"]]
+    app.set_database(app.mongodb_client[config["DB_NAME"]])
 
     helloresp = app.mongodb_client.admin.command("hello")
 
@@ -35,7 +36,11 @@ def startup_db_client():
     if helloresp["readOnly"]:
         raise RuntimeError("Database is readonly!")
 
-    app.secret_key = config["SECRET_KEY_HEX"]
+    # Initialize unique indexes
+    initialize_unique_indexes(app.database)
+
+    app.set_secret_key(config["SECRET_KEY_HEX"])
+
     print("Connected to the MongoDB database!")
 
 
@@ -52,4 +57,13 @@ globalRouter.include_router(
     user_router, tags=["user"], prefix=USER_PREFIX
 )
 
+globalRouter.include_router(
+    votinginforouter, tags=["info"], prefix=INFO_PREFIX
+)
+
+globalRouter.include_router(
+    votingrouter, tags=["voting"], prefix=VOTING_PREFIX
+)
 app.include_router(globalRouter, prefix=API_PREFIX)
+# include static files last
+app.mount("/", StaticFiles(directory="static"), name="static")

@@ -1,2 +1,4 @@
 backend_venv
 .env
+static
+generate_static_data

@@ -1,43 +1,43 @@
-from sqlite3 import dbapi2
-from typing import Optional
+from typing import Literal, Optional
 from fastapi import FastAPI, Request
 from pymongo import MongoClient
 from pymongo.database import Database
-from pydantic.main import ModelMetaclass
+from pydantic import Field
+from pydantic.main import ModelMetaclass, BaseModel
+from uuid import UUID, uuid4
 
 
 class FastAPIWithDB(FastAPI):
     '''Extension of FastAPI App to receive type hinting'''
 
-    def _get_client(self) -> MongoClient:
+    @property
+    def mongodb_client(self) -> MongoClient:
         return self.__client
 
-    def _set_client(self, client):
+    def set_mongo_client(self, client: MongoClient):
         if not isinstance(client, MongoClient):
             raise TypeError("Database must be initialized with MongoDBClient")
         self.__client = client
 
-    mongodb_client = property(_get_client, _set_client)
+    # mongodb_client = property(_get_client, _set_client)
 
-    def _get_database(self) -> Database:
+    @property
+    def database(self) -> Database:
         return self.__database
 
-    def _set_database(self, db):
+    def set_database(self, db: Database):
         if not isinstance(db, Database):
             raise TypeError("Database must be initialized with MongoDatabase!")
         self.__database = db
 
-    database = property(_get_database, _set_database)
-
-    def _get_secret_key(self) -> str:
+    @property
+    def secret_key(self) -> str:
         return self.__secret_key
 
-    def _set_secret_key(self, key):
+    def set_secret_key(self, key: str):
         if not isinstance(key, str):
             raise TypeError("Secret key must be initialized as a string!")
         self.__secret_key = key
-
-    secret_key = property(_get_secret_key, _set_secret_key)
 
 
 class RequestWithDB(Request):
@@ -59,4 +59,12 @@ class AllOptional(ModelMetaclass):
         return super().__new__(cls, name, bases, namespaces, **kwargs)
 
 
-UUIDRef = str
+class BaseIDModel(BaseModel):
+    id: str = Field(default_factory=uuid4, alias="_id")
+
+    class Config:
+        allow_population_by_field_name = True
+
+
+UUIDRef = UUID
+CandidateStatus = Literal["President", "Vicepresident", "Semester"]

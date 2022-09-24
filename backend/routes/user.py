@@ -5,24 +5,27 @@ from backend.common.types import RequestWithDB
 from backend.data.model.base_response import BaseResponse
 from backend.data.model.user import UserUpdate
 from backend.routes.middlewares import authenticated_user
-from backend.data.model import UserOut, UserToken
+from backend.data.model import UserToken
 
 router = APIRouter()
 
 
-@router.get("/users/me/",
-            response_model=UserToken)
+@router.get("/me/",
+            response_model=UserToken,
+            response_model_exclude_none=True,)
 async def read_users_me(current_user: UserToken = Depends(authenticated_user)):
     return current_user
 
 
 @router.put("/update/",
             response_description="Updates currently logged in user",
-            response_model=BaseResponse[UserUpdate]
+            response_model=BaseResponse[UserUpdate],
+            response_model_exclude_none=True,
             )
 def update_user_info(
         request: RequestWithDB, userfields: UserUpdate = Body(...),
         current_user: UserToken = Depends(authenticated_user)):
+
     non_noneuserfields = {k: v for k,
                           v in userfields.dict().items() if v is not None}
     if len(non_noneuserfields) >= 1:

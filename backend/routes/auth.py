@@ -14,7 +14,9 @@ router = APIRouter()
 @router.post("/register",
              response_description="Register a new user",
              status_code=status.HTTP_201_CREATED,
-             response_model=BaseResponse[UserOut])
+             response_model=BaseResponse[UserOut],
+             response_model_exclude_none=True,
+             )
 def register_user(request: RequestWithDB, user: UserIn = Body(...)):
 
     # First perform any input validation (length, phone, email etc)
