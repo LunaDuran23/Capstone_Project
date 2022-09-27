@@ -1,8 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
+// import { useNavigate } from 'react-router';
 import { Grid } from "@material-ui/core/";
 import './App.css'
-
 import NavB from './NavB';
 import Container from './Container';
 
@@ -32,18 +31,18 @@ const faculty = [{img: CEICT, name: 'Consejo Estudiantil de la Escuela de Ingeni
 
 const Home = () =>{
 
-    let navigate = useNavigate();
+    // let navigate = useNavigate();
 
     return(
-        <>
+        <div>
         <NavB/>
         <div className='margin'>
-        <Grid container direction={'row'} spacing={0}>
+        <Grid className='top' container direction={'row'} spacing={0}>
         {faculty.map((item, index) => (
             <Container data={item} />))}
         </Grid>  
         </div>  
-        </>
+        </div>
     );
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import NavB from './NavB';
+// import NavB from './NavB';
 import {
     makeStyles,
     Container,
@@ -7,7 +7,7 @@ import {
     TextField,
     Button,
   } from "@material-ui/core";
-  import { useState, useEffect } from "react"; 
+import { useState, useEffect } from "react"; 
 import './SignUp.css'
 
 
@@ -78,13 +78,6 @@ function SignUp(){
         <TextField
             variant="outlined"
             margin="normal"
-            label="Nombres"
-            fullWidth
-            required
-          />
-        <TextField
-            variant="outlined"
-            margin="normal"
             label="Apellidos"
             fullWidth
             required
@@ -137,6 +130,51 @@ function SignUp(){
             </>
           )}
         </form>
+
+
+
+        {/* <form onSubmit={handleSubmit}>
+          <div className="ui divider"></div>
+          <div className="ui form">
+            <div className="field">
+              <TextField
+                  variant="outlined"
+                  margin="normal"
+                  label="Nombres"
+                  name="firstName"
+                  value={formValues.firstName}
+                  onChange={handleChange}
+                  fullWidth
+                  required
+                />              
+            </div>
+            <p>{formErrors.firstName}</p>
+            <div className="field">
+              <label>Email</label>
+              <input
+                type="text"
+                name="email"
+                placeholder="Email"
+                value={formValues.email}
+                onChange={handleChange}
+              />
+            </div>
+            <p>{formErrors.email}</p>
+            <div className="field">
+              <label>Password</label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={formValues.password}
+                onChange={handleChange}
+              />
+            </div>
+            <p>{formErrors.password}</p>
+            <button className="fluid ui button blue">Submit</button>
+          </div>
+        </form> */}
+
       </Container>
       </Container>
     );

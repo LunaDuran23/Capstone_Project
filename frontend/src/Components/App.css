@@ -1,5 +1,29 @@
-body{
+body {
   font-family: 'Helvetica Neue';
+  background: rgb(244, 244, 244);
+  background: radial-gradient(
+    circle,
+    rgba(210, 210, 210, 255) 0%,
+    rgba(210, 210, 210, 255) 0%,
+    rgba(210, 210, 210, 255) 100%
+  );
+}
+
+.color-nav {
+  background-color: rgba(34, 31, 76, 255);
+  height: 80px    
+}
+
+/* .logo-image {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-top: -6px;    
+} */
+
+.top {
+  margin-top: 150px;
 }
 
 .form_pos{
