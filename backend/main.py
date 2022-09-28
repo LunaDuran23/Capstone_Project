@@ -6,10 +6,30 @@ from backend.utils.unique_initialize_db import initialize_unique_indexes
 from backend.routes import auth_router, user_router, votinginforouter, votingrouter
 from fastapi import APIRouter
 from fastapi.staticfiles import StaticFiles
+from starlette.middleware.cors import CORSMiddleware
 
 globalRouter = APIRouter()
 config = dotenv_values(".env")
 app = FastAPIWithDB()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.on_event("startup")
