@@ -9,7 +9,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 
-function LogIn(){
+function SignUp(){
   const [startDate, setStartDate] = useState(new Date());
 
   const initialValues = { username: "", email: "", password: "" };
@@ -62,7 +62,7 @@ function LogIn(){
         <NavB/>,
         <div className = "box">
         <form onSubmit={handleSubmit}>
-        <span className="text-center">login</span>
+        <span className="text-center">Sign Up</span>
           <div className="ui divider"></div>
           <div className="ui form">
             <div className="input-container">
@@ -113,7 +113,7 @@ function LogIn(){
             </div>
 
             <DatePicker id = "bir_date"selected={startDate} onChange={(date) => setStartDate(date)} />
-            
+
             <button className="fluid ui button blue">Submit</button>
           </div>
           </form>
@@ -122,4 +122,4 @@ function LogIn(){
     );
 }
 
-export default LogIn;
+export default SignUp;
