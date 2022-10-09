@@ -6,27 +6,17 @@ import NavB from './NavB';
 import Container from './Container';
 
 import CEICT from './images/CEICT.png';
-import CECN from './images/CECN.png';
 import Creacion from './images/creacion.png';
-import Econ from './images/economia.png';
 import GDU from './images/GDU.png';
 import Humanas from './images/humanas.png';
 import Juris from './images/juris.png';
-import Medicina from './images/medicina.png';
-import Psicologia from './images/psicologia.png';
-import Rehab from './images/rehab.png';
 import RRII from './images/RRII.png';
 
 const faculty = [{img: CEICT, name: 'Consejo Estudiantil de la Escuela de Ingeniería, Ciencia y Tecnología', route: '/CEICT'},
-                {img: CECN, name: 'Consejo Estudiantil de Ciencias Naturales', route:'/CECN'},
                 {img: Creacion, name: 'Consejo Estudiantil de Creación', route:'/creacion'},
-                {img: Econ, name: 'Consejo Estudiantil de Economía', route:'/economia'},
                 {img: GDU, name: 'Consejo Estudiantil de Ciencia Política y GDU', route:'/ciencia-politica-gdu'},
                 {img: Humanas, name: 'Consejo Estudiantil de Ciencias Humanas', route:'/ciencias-humanas'},
                 {img: Juris, name: 'Consejo Estudiantil de Jurisprudencia', route:'/jurisprudencia'},
-                {img: Medicina, name: 'Consejo Estudiantil de Medicina', route:'/medicina'},
-                {img: Psicologia, name: 'Consejo Estudiantil de Psicología', route:'/psicologia'},
-                {img: Rehab, name: 'Consejo Estudiantil de Rehabilitación', route:'/rehabilitacion'},
                 {img: RRII, name: 'Consejo Estudiantil de Relaciones Internacionales', route:'/RRII'}]
 
 const Home = () =>{

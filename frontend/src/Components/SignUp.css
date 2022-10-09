@@ -1,141 +1,90 @@
-
-label,
-input {
-  /* In order to define widths */
-  display: inline-block;
+body{
+  font-family: 'PT Serif', serif;
 }
 
-label {
-  width: 30%;
-  /* Positions the label text beside the input */
-  text-align: right;
+.margin_sign{
+  margin-top: 150px;
+  margin-left: 450px;
+  margin-right: 50px;
 }
 
-/* input[type=text]:focus {
-  background-color: lightblue;
-}
-input[type=password]:focus {
-  background-color: lightblue;
-} */
-
-label+input {
-  width: 30%;
-  /* Large margin-right to force the next element to the new-line
-           and margin-left to create a gutter between the label and input */
-  margin: 0% 10% 0% 4%;
+.title{
+  font-family: 'PT Serif', serif;
+	color:black;	
+  font-size: 30px;
+  padding-right: 400px;
+  display: block;
+  text-align: center;
+  margin-bottom: 50px;
 }
 
-
-/* Only the submit button is matched by this selector,
-       but to be sure you could use an id or class for that button */
-
-input+input {
-  float: right;
+.input-style{
+  position:relative;
+  font-family: 'PT Serif', serif;
+  font-size: 15px;
 }
 
-  
-
-#formulary_ext {
-    margin-top: 150px !important;
-    display: flex !important;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 50vh !important;
-    width: 40% !important;
-    border: 60px solid #dadde6;
-    border-radius: 10%;
-    margin: auto;
-    background-color: rgb(255, 255, 255);
-  
-  }
-
-  pre {
-    width: 70%;
-    color: #fff;
-    font-size: larger;
-  }
-  
-  button {
-    background: #0563b4 !important;
-  }
-  p {
-    color: red;
-  }
-
-
-  
-
-.react-datepicker__input-container input {
-    width: 100%;
-    background-color:rgba(48, 48, 48, 0.89);
-    place-content: "red";
- }
-
-/* Here are the input design */
-
-
-.text-center{
-	color:#fff;	
-	text-transform:uppercase;
-    font-size: 23px;
-    margin: -50px 0 80px 0;
-    display: block;
-    text-align: center;
-}
-.box{
-	position:absolute;
-	left:50%;
-	top:50%;
-	transform: translate(-50%,-50%);
-    background-color: rgba(0, 0, 0, 0.89);
-	border-radius:3px;
-	padding:70px 100px;
-}
-.input-container{
-	position:relative;
-	margin-bottom:25px;
-}
 .input-container label{
-	position:absolute;
-	top:0px;
-	left:0px;
-	font-size:16px;
-	color:#fff;	
-    pointer-event:none;
-	transition: all 0.5s ease-in-out;
+  font-size: 50px;
+  position:absolute;
+  pointer-events:none;
+  transition: all 0.5s ease-in-out;
 }
-.input-container input{ 
+
+.input-style input{
+  height: 40px;
+  width: 400px;
+  background-color: #E3E7E9;
+  font-size: 15px;
+  padding: 4px 20px 0;
   border:0;
   border-bottom:1px solid #555;  
-  background:transparent;
-  width:100%;
-  padding:8px 0 5px 0;
-  font-size:16px;
-  color:#fff;
-}
-.input-container input:focus{ 
- border:none;	
- outline:none;
- border-bottom:1px solid #e74c3c;	
-}
-.btn{
-	color:#fff;
-	background-color:#e74c3c;
-	outline: none;
-    border: 0;
-    color: #fff;
-	padding:10px 20px;
-	text-transform:uppercase;
-	margin-top:50px;
-	border-radius:2px;
-	cursor:pointer;
-	position:relative;
+  padding-left: 10px;
+  font-size:15px;
+  color:black;
 }
 
-.input-container input:focus ~ label,
-.input-container input:valid ~ label{
-	top:-12px;
-	font-size:12px;
-	
+.pad{
+  padding-bottom: 20px;
+}
+
+.input-style button{
+  font-size: 16px;
+  height: 40px;
+  width: 400px;
+  background-color: rgba(34, 31, 76, 255);
+  color: white;
+}
+
+.two-inputs{
+  position:relative;
+  font-family: 'PT Serif', serif;
+  font-size: 20px;
+}
+
+.two-inputs input{
+  height: 40px;
+  width: 192px;
+  background-color: #E3E7E9;
+  font-size: 15px;
+  padding: 4px 20px 0;
+  border:0;
+  border-bottom:1px solid #555;  
+  padding-left: 10px;
+  font-size:15px;
+  color:black;
+}
+
+.select{
+  font-size: 15px;
+  position: relative;
+  font-family: 'PT Serif', serif;
+}
+
+.select input{
+   display: inline-block;
+   width: 30px;
+   height: 30px;
+   margin-top: -1px;
+   vertical-align: middle;
 }

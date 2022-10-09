@@ -19,18 +19,19 @@ function NavB(){
                     width="200"
                     height="90"
                     className="d-inline-block align-top"
-                    alt="React Bootstrap logo"
+                    alt=""
                    />
                 </Navbar.Brand>
-                    <Form className="form_pos">
-                        <Button variant="secondary">Consultar Estadisticas</Button>{' '}
-                    </Form>
-                    <Nav>
-                        <Nav.Link href="/logIn">Log In</Nav.Link>
-                        <Nav.Link href="/signUp">Sign Up</Nav.Link>
-                    </Nav>
-            </Container>
-        </Navbar>
+                <Form className="form_pos">
+                    <Button variant="primary" >Votaciones</Button>{' '}
+                </Form>                                        
+                <Nav>
+                    <Nav.Link href="/">Consultar Resultados</Nav.Link>
+                    <Nav.Link href="/logIn">Log In</Nav.Link>
+                    <Nav.Link href="/signUp">Sign Up</Nav.Link>
+                </Nav>
+                </Container>
+            </Navbar>
     );
 }
 

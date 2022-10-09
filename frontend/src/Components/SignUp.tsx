@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import './SignUp.css'
 
 /*https://github.com/Hacker0x01/react-datepicker*/
-import DatePicker from "react-datepicker";
+import DatePicker from "react-datepicker/dist/react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 
@@ -36,7 +36,7 @@ function SignUp(){
   }, [formValues, formErrors, isSubmit]);
 
   const validate = (values) => {
-    const errors = {username: "", email:"",password:""};
+    const errors = {username: "", email:"", password:"", CC:"", numero: ""};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     if (!values.username) {
       errors.username = "Username is required!";
@@ -59,65 +59,88 @@ function SignUp(){
 
     return (
       <div>
-        <NavB/>,
-        <div className = "box">
+        <NavB/>
+        <div className='margin_sign'>
         <form onSubmit={handleSubmit}>
-        <span className="text-center">Sign Up</span>
-          <div className="ui divider"></div>
-          <div className="ui form">
-            <div className="input-container">
+        <span className="title">Crear una cuenta</span>
+            <div className='two-inputs'>
               <input
                 type="text"
                 name="username"
-                placeholder="Username"
+                placeholder="Nombres"
                 value={formValues.username}
                 onChange={handleChange}
+              /> &ensp;
+              <input
+                type="text"
+                name="username"
+                placeholder="Apellidos"
               />
             </div>
             <p>{formErrors.username}</p>
-            <div className="input-container">
+            
+
+            <div className='input-style'>
               <input
                 type="text"
                 name="email"
-                placeholder="Email"
+                placeholder="Correo electrónico"
                 value={formValues.email}
                 onChange={handleChange}
               />
-            </div>
-            <p>{formErrors.email}</p>
-            <div className="input-container">
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={formValues.password}
-                onChange={handleChange}
-              />
-            </div>
-            <p>{formErrors.password}</p>
 
-            <div className="input-container">
-              <input
-                type="number"
+            <p>{formErrors.email}</p>
+
+            <input
+                type="text"
                 name="Numero"
                 placeholder="Numero"
               />
-
-            </div>
-            <div className="input-container">
-              <input
-                type="number"
+            <p></p>
+              
+            <input
+                type="text"
                 name="CC"
                 placeholder="CC"
-              />
-            </div>
+            />
+      
+            <p></p>
+
+            <label>Fecha de Nacimiento</label><p></p>
 
             <DatePicker id = "bir_date"selected={startDate} onChange={(date) => setStartDate(date)} />
+            <p></p>
+            </div>
 
-            <button className="fluid ui button blue">Submit</button>
+          <div className='select'>
+            <p>Genero</p>
+            <input type="radio" name="M" value="Masculino" />&ensp;<label>Masculino</label>&ensp;
+            <input type="radio" name="F" value="Femenino" />&ensp;<label>Femenino</label>
+            <p></p>
           </div>
+
+          <div className='two-inputs'>
+            <input
+                type="password"
+                name="password"
+                placeholder="Contraseña"
+                value={formValues.password}
+                onChange={handleChange}
+            />&ensp;
+            <input
+                type="password"
+                name="password2"
+                placeholder="Confirme contraseña"
+            />
+
+            <p>{formErrors.password}</p>
+          </div>
+
+            <div className='input-style'>
+              <button>Registrarse</button>
+            </div>
           </form>
-      </div>
+        </div>
       </div>
     );
 }

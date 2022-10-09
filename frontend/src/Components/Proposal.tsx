@@ -1,21 +1,18 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
 import Card from 'react-bootstrap/Card';
 import { Grid } from "@material-ui/core/";
-import './App.css'
 
-const Container = ({data}) =>{
-
-    let navigate = useNavigate();
-    
+const Proposal = ({data}) =>{
     return(<>
         <Grid item xs={4} > 
-                    <Card onClick={() => navigate(data.route)} className='card_h'>
-                        <Card.Img src={data.img} variant='top'/>
+                    <Card className='card_h'>
                         <Card.Body>
                             <Card.Title className='title_style'>
                                     {data.name}
                             </Card.Title>
+                            <Card.Text>
+                                {data.description}
+                            </Card.Text>
                         </Card.Body>
                     </Card>
             </Grid>
@@ -23,4 +20,4 @@ const Container = ({data}) =>{
     );
 }
 
-export default Container;
+export default Proposal;

@@ -5,9 +5,9 @@ import { useState, useEffect } from "react";
 import './LogIn.css'
 
 function LogIn(){
-  const initialValues = { username: "", email: "", password: "" };
+  const initialValues = {email: "", password: "" };
   const [formValues, setFormValues] = useState(initialValues);
-  const [formErrors, setFormErrors] = useState({username:"",email:"",password:""});
+  const [formErrors, setFormErrors] = useState({email:"",password:""});
   const [isSubmit, setIsSubmit] = useState(false);
 
   const handleChange = (e) => {
@@ -29,11 +29,8 @@ function LogIn(){
   }, [formValues, formErrors, isSubmit]);
 
   const validate = (values) => {
-    const errors = {username: "", email:"",password:""};
+    const errors = {email:"",password:""};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    if (!values.username) {
-      errors.username = "Username is required!";
-    }
     if (!values.email) {
       errors.email = "Email is required!";
     } else if (!regex.test(values.email)) {
@@ -51,48 +48,42 @@ function LogIn(){
 
 
     return (
+      <>
       <div>
-        <NavB/>,
-        <div className = "box">
+        <NavB/>
+        <div className='margin_log'>
         <form onSubmit={handleSubmit}>
-        <span className="text-center">login</span>
-          <div className="ui divider"></div>
-          <div className="ui form">
-            <div className="input-container">
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                value={formValues.username}
-                onChange={handleChange}
-              />
-            </div>
-            <p>{formErrors.username}</p>
-            <div className="input-container">
+        <span className="title">¡Bienvenido de Vuelta!</span>
+              <div className='input-style'> 
+              
+              <label>Correo electrónico</label><br></br>
+              <div className='pad'></div>
               <input
                 type="text"
                 name="email"
-                placeholder="Email"
+                placeholder="Ingrese su correo electrónico"
                 value={formValues.email}
                 onChange={handleChange}
               />
-            </div>
             <p>{formErrors.email}</p>
-            <div className="input-container">
+            <div className='pad'></div>
+            <label>Contraseña</label><br></br>
+            <div className='pad'></div>
               <input
                 type="password"
                 name="password"
-                placeholder="Password"
+                placeholder="Ingrese su contraseña"
                 value={formValues.password}
                 onChange={handleChange}
               />
-            </div>
             <p>{formErrors.password}</p>
-            <button className="fluid ui button blue">Submit</button>
+            <div className='pad'></div>
+            <button className="fluid ui button blue">INGRESAR</button>
           </div>
           </form>
-      </div>
-      </div>
+          </div>
+          </div>
+          </>
     );
 }
 

@@ -16,7 +16,7 @@ function App() {
             <Route path="/logIn" element={<LogIn />} />
             <Route path="/signUp" element={<SignUp />} />
 
-            <Route path="/CEICT" element={<FacultyInfo faculty={{name: 'EICT'}} />} />
+            <Route path="/CEICT" element={<FacultyInfo faculty={{name: 'CEICT'}} />} />
             <Route path="/creacion" element={<FacultyInfo faculty={{name: 'creacion'}} />} />
             <Route path="/ciencia-politica-gdu" element={<FacultyInfo faculty={{name: 'gdu'}} />} />
             <Route path="/ciencias-humanas" element={<FacultyInfo faculty={{name: 'humanas'}} />} />
