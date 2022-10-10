@@ -2,6 +2,11 @@ body{
   font-family: 'PT Serif', serif;
 }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button { 
+	-webkit-appearance: none;
+} 
+
 .margin_sign{
   margin-top: 150px;
   margin-left: 450px;

@@ -1,5 +1,6 @@
 import React from 'react';
-// import { useNavigate } from 'react-router';
+//import { useEffect, useState } from 'react';
+
 import { Grid } from "@material-ui/core/";
 import './App.css'
 import NavB from './NavB';
@@ -20,8 +21,6 @@ const faculty = [{img: CEICT, name: 'Consejo Estudiantil de la Escuela de Ingeni
                 {img: RRII, name: 'Consejo Estudiantil de Relaciones Internacionales', route:'/RRII'}]
 
 const Home = () =>{
-
-    // let navigate = useNavigate();
 
     return(
         <div>

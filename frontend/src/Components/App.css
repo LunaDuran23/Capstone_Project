@@ -1,5 +1,5 @@
 body {
-  font-family: 'PT Serif', serif;
+  font-family: 'Grumpy wizards', serif;
   /*background: rgb(244, 244, 244);
   background: radial-gradient(
     circle,
@@ -12,7 +12,7 @@ body {
 .color-nav {
   background-color: rgba(34, 31, 76, 255);
   height: 80px;
-  font-family: 'PT Serif', serif;    
+  font-family: 'Grumpy wizards', serif;    
 }
 
 /* .logo-image {
@@ -45,7 +45,7 @@ body {
 
 .form_pos{
   padding-left: 650px;
-  font-family: 'PT Serif', serif;
+  font-family: 'Grumpy wizards', serif;
 }
 
 .pos{
@@ -56,14 +56,14 @@ body {
 }
 
 .margin{
-  font-family: 'PT Serif', serif;
+  font-family: 'Grumpy wizards', serif;
   margin-top: 90px;
   margin-left: 80px;
   margin-right: 80px;
 }
 
 .card_h{
-  font-family: 'PT Serif', serif;
+  font-family: 'Grumpy wizards', serif;
   cursor: pointer;
   text-align: center;
   display: block;

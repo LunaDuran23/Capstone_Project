@@ -1,9 +1,9 @@
 import React from 'react';
 
+import { Carousel } from '3d-react-carousal';
+
 import Candidate from './Candidate';
 import Verde from './images/listas/Verde.jpeg';
-import ReactCardCarousel from "react-card-carousel";
-import { Carousel } from '3d-react-carousal';
 
 
 const candidates = [

@@ -4,17 +4,13 @@ import NavB from './NavB';
 import { useState, useEffect } from "react"; 
 import './SignUp.css'
 
-/*https://github.com/Hacker0x01/react-datepicker*/
-import DatePicker from "react-datepicker/dist/react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-
 
 function SignUp(){
-  const [startDate, setStartDate] = useState(new Date());
 
-  const initialValues = { username: "", email: "", password: "" };
+  const initialValues = { name: "", surname: "", email: "", password: "", gender: "", dateOfBirth: Date(), universityID: Number(), faculty: Number(), semester: Number()};
+  const [confirm, setConfirm] = useState({password2: ""});
   const [formValues, setFormValues] = useState(initialValues);
-  const [formErrors, setFormErrors] = useState({username:"",email:"",password:""});
+  const [formErrors, setFormErrors] = useState({name: "", surname: "", email: "", password: "", gender: "", dateOfBirth: "", universityID: ""});
   const [isSubmit, setIsSubmit] = useState(false);
 
   const handleChange = (e) => {
@@ -22,39 +18,57 @@ function SignUp(){
     setFormValues({ ...formValues, [name]: value });
   };
 
+  const password_change2 = (e) => {
+    const { name, value } = e.target;
+    setConfirm({ ...confirm, [name]: value });
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormErrors(validate(formValues));
+    setFormErrors(validate(formValues, confirm));
     setIsSubmit(true);
   };
 
   useEffect(() => {
-    console.log(formErrors);
+    //console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.log(formValues);
     }
   }, [formValues, formErrors, isSubmit]);
 
-  const validate = (values) => {
-    const errors = {username: "", email:"", password:"", CC:"", numero: ""};
+  const validate = (values, c) => {
+    const errors = {name: "", surname: "", email:"", password:"", dateOfBirth: "", gender: "", universityID: ""};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    if (!values.username) {
-      errors.username = "Username is required!";
+    if (!values.name) {
+      errors.name = "Nombre es requerido!";
+    }
+    if (!values.name) {
+      errors.name = "Apellido es requerido!";
     }
     if (!values.email) {
-      errors.email = "Email is required!";
+      errors.email = "Correo es requerido!";
     } else if (!regex.test(values.email)) {
-      errors.email = "This is not a valid email format!";
+      errors.email = "Este correo no cumple con el formato requerido!";
+    }
+    if(!values.gender) {
+      errors.gender = "Género es requerido!"
+    }
+    if(!values.dateOfBirth) {
+      errors.dateOfBirth = "Fecha de nacimiento es requerida!";
+    }if(!values.universityID) {
+      errors.universityID = "Cédula es requerida";
     }
     if (!values.password) {
-      errors.password = "Password is required";
-    } else if (values.password.length < 4) {
-      errors.password = "Password must be more than 4 characters";
-    } else if (values.password.length > 10) {
-      errors.password = "Password cannot exceed more than 10 characters";
+      errors.password = "Contraseña es requerida";
+    } else if (values.password.length < 7) {
+      errors.password = "Contraseña debe tener más de 7 caracteres";
+    } if(c.password2 !== values.password){
+      errors.password = "Contraseñas no coinciden";
     }
     return errors;
   };
+
+  console.log(formValues);
 
 
     return (
@@ -66,18 +80,20 @@ function SignUp(){
             <div className='two-inputs'>
               <input
                 type="text"
-                name="username"
+                name="name"
                 placeholder="Nombres"
-                value={formValues.username}
+                value={formValues.name}
                 onChange={handleChange}
               /> &ensp;
               <input
                 type="text"
-                name="username"
+                name="surname"
                 placeholder="Apellidos"
+                value={formValues.surname}
+                onChange={handleChange}
               />
             </div>
-            <p>{formErrors.username}</p>
+            <p>{formErrors.name}</p>
             
 
             <div className='input-style'>
@@ -99,24 +115,25 @@ function SignUp(){
             <p></p>
               
             <input
-                type="text"
-                name="CC"
+                type="number"
+                name="universityID"
                 placeholder="CC"
+                value={formValues.universityID}
+                onChange={handleChange}
             />
       
-            <p></p>
+            <p>{formErrors.universityID}</p>
 
             <label>Fecha de Nacimiento</label><p></p>
-
-            <DatePicker id = "bir_date"selected={startDate} onChange={(date) => setStartDate(date)} />
-            <p></p>
+            <input type="date" name="dateOfBirth" value={formValues.dateOfBirth} onChange={handleChange} />
+            <p>{formErrors.dateOfBirth}</p>
             </div>
 
-          <div className='select'>
+          <div className='select' onChange={handleChange}>
             <p>Genero</p>
-            <input type="radio" name="M" value="Masculino" />&ensp;<label>Masculino</label>&ensp;
-            <input type="radio" name="F" value="Femenino" />&ensp;<label>Femenino</label>
-            <p></p>
+            <input type="radio" name="gender" value="M" checked={formValues.gender === "M"} />&ensp;<label>Masculino</label>&ensp;
+            <input type="radio" name="gender" value="F" checked={formValues.gender === "F"} />&ensp;<label>Femenino</label>
+            <p>{formErrors.gender}</p>
           </div>
 
           <div className='two-inputs'>
@@ -131,6 +148,8 @@ function SignUp(){
                 type="password"
                 name="password2"
                 placeholder="Confirme contraseña"
+                value={confirm.password2}
+                onChange={password_change2}
             />
 
             <p>{formErrors.password}</p>
