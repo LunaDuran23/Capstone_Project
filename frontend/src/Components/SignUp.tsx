@@ -1,21 +1,35 @@
 import React from 'react';
 import NavB from './NavB';
 
+
 import { useState, useEffect } from "react"; 
 import './SignUp.css'
 
 
+const options = [{value: "", label: "Escoja una opción"},
+                {value: 0, label: "Escuela de Ingeniería, Ciencia y Tecnología"},
+                {value: 1, label: 'Facultad de Creación'},
+                {value: 2, label: 'Facultad de Estudios Internacionales, Políticos y Urbanos'},
+                {value: 3, label: 'Escuela de Ciencias Humanas'},
+                {value: 4, label: 'Facultad de Jurisprudencia'},
+                {value: 5, label: 'Facultad de Relaciones Internacionales'}];
+
 function SignUp(){
 
-  const initialValues = { name: "", surname: "", email: "", password: "", gender: "", dateOfBirth: Date(), universityID: Number(), faculty: Number(), semester: Number()};
+  const initialValues = { name: "", surname: "", email: "", password: "", gender: "", dateOfBirth: Date(), universityID: Number(), semester: Number()};
   const [confirm, setConfirm] = useState({password2: ""});
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({name: "", surname: "", email: "", password: "", gender: "", dateOfBirth: "", universityID: ""});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [selected, setSelected] = useState(options[0].value);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
+  };
+
+  const handleChange2 = event => {
+    setSelected(event.target.value);
   };
 
   const password_change2 = (e) => {
@@ -30,7 +44,6 @@ function SignUp(){
   };
 
   useEffect(() => {
-    //console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.log(formValues);
     }
@@ -68,7 +81,7 @@ function SignUp(){
     return errors;
   };
 
-  console.log(formValues);
+  const query = { name: formValues.name, surname: formValues.surname, email: formValues.email, password: formValues.password, gender: formValues.gender, dateOfBirth: formValues.dateOfBirth, universityID: formValues.universityID, semester: formValues.semester, faculty: selected};
 
 
     return (
@@ -76,7 +89,7 @@ function SignUp(){
         <NavB/>
         <div className='margin_sign'>
         <form onSubmit={handleSubmit}>
-        <span className="title">Crear una cuenta</span>
+        <h1 className='title'>Crear una cuenta</h1>
             <div className='two-inputs'>
               <input
                 type="text"
@@ -93,7 +106,7 @@ function SignUp(){
                 onChange={handleChange}
               />
             </div>
-            <p>{formErrors.name}</p>
+            <p>{formErrors.name}  {formErrors.surname}</p>
             
 
             <div className='input-style'>
@@ -123,6 +136,21 @@ function SignUp(){
             />
       
             <p>{formErrors.universityID}</p>
+
+            <div className='two-inputs'>
+              <select value={selected} onChange={handleChange2}>
+                {options.map((option) => (
+                  <option value={option.value}>{option.label}</option>
+                ))}
+              </select>&ensp;
+              <input
+                  type="number"
+                  name="semester"
+                  placeholder="Semestre"
+                  value={formValues.semester}
+                  onChange={handleChange}
+              />
+            </div><br></br>
 
             <label>Fecha de Nacimiento</label><p></p>
             <input type="date" name="dateOfBirth" value={formValues.dateOfBirth} onChange={handleChange} />

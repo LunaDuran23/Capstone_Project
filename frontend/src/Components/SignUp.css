@@ -17,14 +17,13 @@ input[type=number]::-webkit-outer-spin-button {
   font-family: 'PT Serif', serif;
 	color:black;	
   font-size: 30px;
-  padding-right: 400px;
   display: block;
   text-align: center;
   margin-bottom: 50px;
 }
 
 .input-style{
-  position:relative;
+  position: relative;
   font-family: 'PT Serif', serif;
   font-size: 15px;
 }
@@ -68,6 +67,19 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .two-inputs input{
+  height: 40px;
+  width: 192px;
+  background-color: #E3E7E9;
+  font-size: 15px;
+  padding: 4px 20px 0;
+  border:0;
+  border-bottom:1px solid #555;  
+  padding-left: 10px;
+  font-size:15px;
+  color:black;
+}
+
+.two-inputs select{
   height: 40px;
   width: 192px;
   background-color: #E3E7E9;
