@@ -7,7 +7,7 @@ import './LogIn.css'
 function LogIn(){
   const initialValues = {email: "", password: "" };
   const [formValues, setFormValues] = useState(initialValues);
-  const [formErrors, setFormErrors] = useState({email:"",password:""});
+  const [formErrors, setFormErrors] = useState({email:"", password:""});
   const [isSubmit, setIsSubmit] = useState(false);
 
   const handleChange = (e) => {
@@ -29,7 +29,7 @@ function LogIn(){
   }, [formValues, formErrors, isSubmit]);
 
   const validate = (values) => {
-    const errors = {email:"",password:""};
+    const errors = {email:"", password:""};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     if (!values.email) {
       errors.email = "Email is required!";
@@ -78,7 +78,7 @@ function LogIn(){
               />
             <p>{formErrors.password}</p>
             <div className='pad'></div>
-            <button className="fluid ui button blue">INGRESAR</button>
+            <button className="fluid ui button blue">Ingresar</button>
           </div>
           </form>
           </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-//import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Grid } from "@material-ui/core/";
 import './App.css'
@@ -21,6 +21,25 @@ const faculty = [{img: CEICT, name: 'Consejo Estudiantil de la Escuela de Ingeni
                 {img: RRII, name: 'Consejo Estudiantil de Relaciones Internacionales', route:'/RRII'}]
 
 const Home = () =>{
+
+    const [info, setInfo] = useState([]);
+
+    const consulta = async () =>{
+        let dataRequest = {
+        method: 'GET'
+        }
+        let url = new URL("https://nedepuserver.ddns.me:25435/api/info/faculties/");
+        let response = await fetch(url, dataRequest);
+        let result = await response.json();
+        setInfo(result);
+    }
+    
+    useEffect(() => {    
+        // Update the document title using the browser API    
+        consulta();
+    });
+
+    console.log(info);
 
     return(
         <div>
