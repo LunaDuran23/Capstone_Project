@@ -2,8 +2,8 @@ import React from 'react';
 // import { useNavigate } from 'react-router';
 import { Grid } from "@material-ui/core/";
 import './App.css'
-import NavB from './NavB';
-import Container from './Container';
+import NavB from './Components/NavB';
+import Container from './Components/Container';
 
 import CEICT from './images/CEICT.png';
 import Creacion from './images/creacion.png';
