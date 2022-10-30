@@ -8,10 +8,9 @@ const Proposal = ({data}) =>{
                     <Card className='card_h'>
                         <Card.Body>
                             <Card.Title className='title_style'>
-                                    {data.name}
+                                    {data}
                             </Card.Title>
                             <Card.Text>
-                                {data.description}
                             </Card.Text>
                         </Card.Body>
                     </Card>

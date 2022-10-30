@@ -1,56 +1,37 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 
 import { Grid } from "@material-ui/core/";
+
 import './App.css'
 import NavB from './NavB';
-import Container from './Container';
-
-import Verde from './images/listas/Verde.jpeg';
-import Rojo from './images/listas/Rojo.jpeg';
-import Azul from './images/listas/Azul.jpeg';
-
-const lists =[{name: 'CEICT', list:[{img: Verde, name:'Lista Verde', route:'/CEICT/verde'},
-                                    {img: Rojo, name:'Lista Roja', route:'/CEICT/roja'},
-                                    {img: Azul, name:'Lista Azul', route:'/CEICT/azul'}]},
-                {name: 'creacion', list:[{img: Verde, name:'Lista Verde', route:'/creacion/verde'},
-                                        {img: Rojo, name:'Lista Roja', route:'/creacion/roja'},
-                                        {img: Azul, name:'Lista Azul', route:'/creacion/azul'}]},
-                {name: 'gdu', list:[{img: Verde, name:'Lista Verde', route:'/ciencia-politica-gdu/verde'},
-                                        {img: Rojo, name:'Lista Roja', route:'/ciencia-politica-gdu/roja'},
-                                        {img: Azul, name:'Lista Azul', route:'/ciencia-politica-gdu/azul'}]},
-                {name: 'humanas', list:[{img: Verde, name:'Lista Verde', route:'/ciencias-humanas/verde'},
-                                        {img: Rojo, name:'Lista Roja', route:'/ciencias-humanas/roja'},
-                                        {img: Azul, name:'Lista Azul', route:'/ciencias-humanas/azul'}]},
-                {name: 'juris', list:[{img: Verde, name:'Lista Verde', route:'/jurisprudencia/verde'},
-                                        {img: Rojo, name:'Lista Roja', route:'/jurisprudencia/roja'},
-                                        {img: Azul, name:'Lista Azul', route:'/jurisprudencia/azul'}]},
-                {name: 'RRII', list:[{img: Verde, name:'Lista Verde', route:'/RRII/verde'},
-                                        {img: Rojo, name:'Lista Roja', route:'/RRII/roja'},
-                                        {img: Azul, name:'Lista Azul', route:'/RRII/azul'}]}]
+import Container2 from './Container2';
 
 
 
-const FacultyInfo = ({faculty}) =>{
+
+const FacultyInfo = ({faculty_id, name}) =>{
     
-    let data_;
+    const [info, setInfo] = useState([]);
+    let a = faculty_id;
 
-    for(let i=0; i<6; ++i){
-        if(lists[i].name === faculty.name){
-            data_ = lists[i].list;
-            break;
-        }
-    }
 
-    console.log(data_);
+    useEffect(() => {
+        fetch('https://nedepuserver.ddns.me:25435/api/info/get_voting_lists?' + new URLSearchParams({
+            faculty_id: a
+        }))
+        .then(response => response.json())
+            // 4. Setting *dogImage* to the image url that we received from the response above
+        .then(data => setInfo(data))
+      },[])
+
+    console.log(info);
 
     return (<>
         <div>
         <NavB/>
         <div className='margin'>
-        <Grid className='top' container direction={'row'} spacing={0}>
-        {data_.map((item, index) => (
-            <Container data={item} />))}
-        </Grid>  
+            <Container2 lists={info} faculty={name} />
         </div>  
         </div>
     </>
