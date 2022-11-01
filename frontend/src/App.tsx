@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 
 import FacultyInfo from './Components/FacultyInfo';
 import ListInfo from './Components/ListInfo';
@@ -9,6 +8,7 @@ import Home from './Components/Home';
 import LogIn from './Components/LogIn';
 import SignUp from './Components/SignUp';
 import VotingFormula from './Components/VotingFormula';
+import VotingSemester from './Components/VotingSemester';
 
 function App() {
   
@@ -36,7 +36,7 @@ function App() {
             ={1} name={"Roja"}/>} />
             <Route path="/economia/ListaNaranja" element={<ListInfo voting_list_id={2} name={"Naranja"}/>} />
             <Route path="/votaciones" element={<VotingFormula />} />
-            <Route path="/votaciones/semestre" element={<Home facultys={facultys}/>} />
+            <Route path="/votaciones/semestre" element={<VotingSemester/>} />
         </Routes>
     </Router>
   );

@@ -1,15 +1,21 @@
 import React from 'react';
+import { useNavigate } from 'react-router';
+
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import "bootstrap/dist/css/bootstrap.min.css";
+
 import "./App.css"
 import urosario from "./urosario.png";
 
 
 function NavB(){
+    
+    let navigate = useNavigate();
+
     return(
             <Navbar fixed="top" collapseOnSelect expand="lg" variant="dark" className="color-nav">
                 <Container>
@@ -23,7 +29,7 @@ function NavB(){
                    />
                 </Navbar.Brand>
                 <Form className="form_pos">
-                    <Button variant="primary" >Votaciones</Button>{' '}
+                    <Button onClick={() => navigate('/votaciones')} variant="primary" >Votaciones</Button>{' '}
                 </Form>                                        
                 <Nav>
                     <Nav.Link href="/">Consultar Resultados</Nav.Link>

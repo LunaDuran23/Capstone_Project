@@ -1,8 +1,9 @@
 import React from 'react';
+
 import { Grid } from "@material-ui/core/";
 
 import NavB from './NavB';
-import Formulas from './Formulas';
+import SemesterCandidates from './SemesterCandidates';
 import './App.css';
 
 const data = {
@@ -99,21 +100,20 @@ const data = {
     ]
   };
 
-const VotingFormula = () =>{
+const VotingSemester = () =>{
 
-    let formulas = data["presidential"];
+    let formulas = data["semester"];
 
     return(
         <>
-            <NavB />
-            <div className='margin'>
-            <br /><br />
-            <Grid style={{marginLeft: '45px'}} className="top" container direction={'row'} spacing={4}>
-                <Formulas formulas={formulas} />
-            </Grid> 
-            </div>
+        <NavB />
+        <div className='margin'>
+        <Grid className="top" container direction={'row'} spacing={6}>
+            <SemesterCandidates candidates={formulas} />
+        </Grid> 
+        </div>
         </>
     );
 }
 
-export default VotingFormula;
+export default VotingSemester;
