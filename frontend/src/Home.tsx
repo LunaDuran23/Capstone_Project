@@ -29,7 +29,7 @@ const Home = () =>{
         <div className='margin'>
         <Grid className='top' container direction={'row'} spacing={0}>
         {faculty.map((item, index) => (
-            <Container data={item} />))}
+            <Container data={item} id_ = {undefined} facultys = {undefined} route={undefined} />))}
         </Grid>  
         </div>  
         </div>
