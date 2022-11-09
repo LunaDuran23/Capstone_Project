@@ -83,29 +83,43 @@ function SignUp(){
   
   const[a, setA] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [state, setState] = useState(false);
 
   const handleClick = async () =>{
     setIsLoading(true);
     try {
-      const query = { name: formValues.name, surname: formValues.surname, email: formValues.email, password: formValues.password, gender: formValues.gender, 
-        dateOfBirth: format(parseISO(formValues.dateOfBirth), "yyyy-MM-dd"), universityID: formValues.universityID, 
-        semester: formValues.semester, faculty: selected};
+      const new_user = {
+        "name": formValues.name,
+        "surname": formValues.surname,
+        "universityID": formValues.universityID,
+        "gender": formValues.gender,
+        "dateOfBirth": format(parseISO(formValues.dateOfBirth), "yyyy-MM-dd"),
+        "faculty": selected,
+        "semester": formValues.semester,
+        "email": formValues.email,
+        "password": formValues.password
+      }
+
+      console.log(new_user);
+
       const response = await fetch('https://nedepuserver.ddns.me:25435/api/auth/register', {
         method: 'POST',
         mode: 'cors',
         headers:{
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(query)
+        body: JSON.stringify(new_user)
       })
 
       if (!response.ok) {
         throw new Error(`Error! status: ${response}`);
+      }else{
+        setState(true);
       }
 
       const result = await response.json();
 
-      console.log('result is: ', JSON.stringify(result, null, 4));
+      console.log('result is: ', JSON.stringify(result.votedIn, null, 4));
 
       setPost(result);
     } catch (err) {
