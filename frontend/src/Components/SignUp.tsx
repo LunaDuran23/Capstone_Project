@@ -1,40 +1,19 @@
 import React from 'react';
 import NavB from './NavB';
+import { format, parseISO } from 'date-fns';
+import Moment from 'moment';
 
 
 import { useState, useEffect } from "react"; 
 import './SignUp.css'
 
 
-    // Example POST method implementation:
-    async function postData(url = '', data = {}) {
-      // Default options are marked with *
-      const response = await fetch(url, {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
-        headers: {
-          'Content-Type': 'application/json'
-          // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        redirect: 'follow', // manual, *follow, error
-        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
-      });
-      return response.json(); // parses JSON response into native JavaScript objects
-    }
-    
-
-
-
 const options = [{value: "", label: "Escoja una opción"},
-                {value: 0, label: "Escuela de Ingeniería, Ciencia y Tecnología"},
-                {value: 1, label: 'Facultad de Creación'},
-                {value: 2, label: 'Facultad de Estudios Internacionales, Políticos y Urbanos'},
-                {value: 3, label: 'Escuela de Ciencias Humanas'},
-                {value: 4, label: 'Facultad de Jurisprudencia'},
-                {value: 5, label: 'Facultad de Relaciones Internacionales'}];
+                {value: 0, label: "Facultad de Economia"},
+                {value: 1, label: 'Escuela de Ingeniería, Ciencia y Tecnología'},
+                {value: 2, label: 'Facultad de Jurisprudencia'},
+                {value: 3, label: 'Facultad de Administración'}];
+
 
 function SignUp(){
 
@@ -63,23 +42,9 @@ function SignUp(){
     e.preventDefault();
     setFormErrors(validate(formValues, confirm));
     setIsSubmit(true);
-    postData("https://nedepuserver.ddns.me:25435//api/auth/register", initialValues)
-    alert("Ocurre cuando envio info");
-    alert(formValues.name);
-
-    postData('https://nedepuserver.ddns.me:25435//api/auth/register', { answer: 42 })
-    .then((data) => {
-      console.log(formValues.password);
-      console.log(data); // JSON data parsed by `data.json()` call
-    });
-
   };
 
-  useEffect(() => {
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues);
-    }
-  }, [formValues, formErrors, isSubmit]);
+  
 
   const validate = (values, c) => {
     const errors = {name: "", surname: "", email:"", password:"", dateOfBirth: "", gender: "", universityID: ""};
@@ -113,7 +78,50 @@ function SignUp(){
     return errors;
   };
 
-  const query = { name: formValues.name, surname: formValues.surname, email: formValues.email, password: formValues.password, gender: formValues.gender, dateOfBirth: formValues.dateOfBirth, universityID: formValues.universityID, semester: formValues.semester, faculty: selected};
+  const [post, setPost] = useState({});
+  
+  
+  const[a, setA] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClick = async () =>{
+    setIsLoading(true);
+    try {
+      const query = { name: formValues.name, surname: formValues.surname, email: formValues.email, password: formValues.password, gender: formValues.gender, 
+        dateOfBirth: format(parseISO(formValues.dateOfBirth), "yyyy-MM-dd"), universityID: formValues.universityID, 
+        semester: formValues.semester, faculty: selected};
+      const response = await fetch('https://nedepuserver.ddns.me:25435/api/auth/register', {
+        method: 'POST',
+        mode: 'cors',
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(query)
+      })
+
+      if (!response.ok) {
+        throw new Error(`Error! status: ${response}`);
+      }
+
+      const result = await response.json();
+
+      console.log('result is: ', JSON.stringify(result, null, 4));
+
+      setPost(result);
+    } catch (err) {
+      console.log('nos jodimos');
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+
+  useEffect(() => {
+    
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(formValues);
+    }
+  }, [formValues, formErrors, isSubmit]);
 
 
     return (
@@ -152,13 +160,7 @@ function SignUp(){
 
             <p>{formErrors.email}</p>
 
-            <input
-                type="text"
-                name="Numero"
-                placeholder="Numero"
-              />
-            <p></p>
-              
+            <label>Cédula</label><p></p>
             <input
                 type="number"
                 name="universityID"
@@ -216,7 +218,7 @@ function SignUp(){
           </div>
 
             <div className='input-style'>
-              <button>Registrarse</button>
+              <button onClick={handleClick}>Registrarse</button>
             </div>
           </form>
         </div>
