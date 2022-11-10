@@ -1,8 +1,17 @@
 import React from 'react';
 import NavB from './NavB';
 import { format, parseISO } from 'date-fns';
-import Moment from 'moment';
+import { useNavigate } from 'react-router';
 
+//import Moment from 'moment';
+
+import {
+  Modal,
+  ModalBody,
+  ModalHeader,
+  Button,
+  ModalFooter
+  } from 'reactstrap';
 
 import { useState, useEffect } from "react"; 
 import './SignUp.css'
@@ -17,6 +26,10 @@ const options = [{value: "", label: "Escoja una opción"},
 
 function SignUp(){
 
+  let navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [data, setData] = useState("");
+
   const initialValues = { name: "", surname: "", email: "", password: "", gender: "", dateOfBirth: Date(), universityID: Number(), semester: Number()};
   const [confirm, setConfirm] = useState({password2: ""});
   const [formValues, setFormValues] = useState(initialValues);
@@ -24,6 +37,10 @@ function SignUp(){
   const [isSubmit, setIsSubmit] = useState(false);
   const [selected, setSelected] = useState(options[0].value);
 
+  const changeState = () =>{
+    setOpen(!open);
+    setData("");
+}
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
@@ -50,29 +67,39 @@ function SignUp(){
     const errors = {name: "", surname: "", email:"", password:"", dateOfBirth: "", gender: "", universityID: ""};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     if (!values.name) {
+      setOpen(false);
       errors.name = "Nombre es requerido!";
     }
     if (!values.name) {
+      setOpen(false);
       errors.name = "Apellido es requerido!";
     }
     if (!values.email) {
+      setOpen(false);
       errors.email = "Correo es requerido!";
     } else if (!regex.test(values.email)) {
+      setOpen(false);
       errors.email = "Este correo no cumple con el formato requerido!";
     }
     if(!values.gender) {
+      setOpen(false);
       errors.gender = "Género es requerido!"
     }
     if(!values.dateOfBirth) {
+      setOpen(false);
       errors.dateOfBirth = "Fecha de nacimiento es requerida!";
     }if(!values.universityID) {
+      setOpen(false);
       errors.universityID = "Cédula es requerida";
     }
     if (!values.password) {
+      setOpen(false);
       errors.password = "Contraseña es requerida";
     } else if (values.password.length < 7) {
+      setOpen(false);
       errors.password = "Contraseña debe tener más de 7 caracteres";
     } if(c.password2 !== values.password){
+      setOpen(false);
       errors.password = "Contraseñas no coinciden";
     }
     return errors;
@@ -87,6 +114,8 @@ function SignUp(){
 
   const handleClick = async () =>{
     setIsLoading(true);
+    setOpen(true);
+    setData("¿Desea ingresar a la página?");
     try {
       const new_user = {
         "name": formValues.name,
@@ -133,6 +162,7 @@ function SignUp(){
   useEffect(() => {
     
     if (Object.keys(formErrors).length === 0 && isSubmit) {
+
       console.log(formValues);
     }
   }, [formValues, formErrors, isSubmit]);
@@ -236,6 +266,17 @@ function SignUp(){
             </div>
           </form>
         </div>
+
+        <Modal isOpen={open} >
+          <ModalHeader>¡Se ha registrado exitosamente!</ModalHeader>
+          <ModalBody>
+              {data}
+          </ModalBody>
+          <ModalFooter>
+              <Button color='primary' onClick={() => navigate('/logIn')}>Aceptar</Button>
+              <Button onClick={changeState}>Cancelar</Button>
+          </ModalFooter>
+        </Modal>
       </div>
     );
 }

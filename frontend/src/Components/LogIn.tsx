@@ -5,6 +5,11 @@ import { useState, useEffect } from "react";
 import './LogIn.css'
 
 function LogIn(){
+
+  const [state, setState] = useState(false);
+  const [post, setPost] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
   const initialValues = {email: "", password: "" };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({email:"", password:""});
@@ -15,6 +20,49 @@ function LogIn(){
     setFormValues({ ...formValues, [name]: value });
   };
 
+  const handleClick = async () =>{
+    setIsLoading(true);
+    try {
+      const datos = {
+        "grant_type": "",
+        "username": formValues.email,
+        "password": formValues.password,
+        "scope": "",
+        "client_id": "",
+        "client_secret": ""
+      }
+
+      const response = await fetch('https://nedepuserver.ddns.me:25435/api/auth/token', {
+        method: 'POST',
+        mode: 'cors',
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datos),
+      })
+      
+      if (!response.ok) {
+        throw new Error(`Error! status: ${response}`);
+      }else{
+        setState(true);
+      }
+
+
+      const result = await response.json();
+      console.log(formValues.email);
+      console.log(formValues.password);
+      // console.log(response.body)
+      console.log('result is: ', JSON.stringify(result));
+
+      setPost(result);
+    } 
+    catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
@@ -22,7 +70,7 @@ function LogIn(){
   };
 
   useEffect(() => {
-    console.log(formErrors);
+    // console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.log(formValues);
     }
@@ -78,7 +126,7 @@ function LogIn(){
               />
             <p>{formErrors.password}</p>
             <div className='pad'></div>
-            <button className="fluid ui button blue">Ingresar</button>
+            <button className="fluid ui button blue" onClick={handleClick}>Ingresar</button>
           </div>
           </form>
           </div>
