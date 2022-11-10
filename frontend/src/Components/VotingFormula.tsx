@@ -1,4 +1,5 @@
 import React from 'react';
+import {useState, useEffect} from 'react';
 import { Grid } from "@material-ui/core/";
 
 import NavB from './NavB';
@@ -100,8 +101,27 @@ const data = {
   };
 
 const VotingFormula = () =>{
+  const [info, setInfo] = useState({});
 
+    useEffect(() => {
+        fetch("https://nedepuserver.ddns.me:25435/api/voting/get-voting-otpions",{
+          headers: new Headers({
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjgwOTU5NDMsInBheWxvYWQiOnsibmFtZSI6IlBlZHJvIiwic3VybmFtZSI6InN0cmluZyIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSJ9fQ.Ohdf8VUDOEv2t-khchJOYqqA2p2fyr1lunm4d0teKo4"
+          })
+        })
+        .then(response => response.json())
+        .then(data => setInfo(data))
+      },[])
+
+  try{
     let formulas = data["presidential"];
+
+    
+
+    let data_ = JSON.stringify(info);
+    let final = JSON.parse(data_).payload["presidential"];
+    console.log(final);
 
     return(
         <>
@@ -109,11 +129,18 @@ const VotingFormula = () =>{
             <div className='margin'>
             <br /><br />
             <Grid style={{marginLeft: '45px'}} className="top" container direction={'row'} spacing={4}>
-                <Formulas formulas={formulas} />
+                <Formulas formulas={final} />
             </Grid> 
             </div>
         </>
     );
+  }catch{
+    return(
+      <NavB/>
+    );
+  }
+
+    
 }
 
 export default VotingFormula;

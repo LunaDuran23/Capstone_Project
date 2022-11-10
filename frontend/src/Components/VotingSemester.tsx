@@ -1,4 +1,5 @@
 import React from 'react';
+import {useState, useEffect} from 'react';
 
 import { Grid } from "@material-ui/core/";
 
@@ -103,17 +104,42 @@ const data = {
 const VotingSemester = () =>{
 
     let formulas = data["semester"];
+    const [info, setInfo] = useState({});
+
+    useEffect(() => {
+        fetch("https://nedepuserver.ddns.me:25435/api/voting/get-voting-otpions",{
+          headers: new Headers({
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjgwOTU5NDMsInBheWxvYWQiOnsibmFtZSI6IlBlZHJvIiwic3VybmFtZSI6InN0cmluZyIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSJ9fQ.Ohdf8VUDOEv2t-khchJOYqqA2p2fyr1lunm4d0teKo4"
+          })
+        })
+        .then(response => response.json())
+        .then(data => setInfo(data))
+      },[])
+
+    try{
+      let data_ = JSON.stringify(info);
+    let final = JSON.parse(data_).payload["semester"];
+    console.log(final);
 
     return(
         <>
         <NavB />
         <div className='margin'>
         <Grid className="top" container direction={'row'} spacing={6}>
-            <SemesterCandidates candidates={formulas} />
+            <SemesterCandidates candidates={final} />
         </Grid> 
         </div>
         </>
     );
+
+    }catch{
+      return(
+        <NavB/>
+      );
+    }
+
+    
 }
 
 export default VotingSemester;

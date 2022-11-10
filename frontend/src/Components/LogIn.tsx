@@ -2,6 +2,8 @@ import React from 'react';
 import NavB from './NavB';
 
 import { useState, useEffect } from "react"; 
+import { useNavigate } from 'react-router';
+
 import './LogIn.css'
 
 function LogIn(){
@@ -23,28 +25,26 @@ function LogIn(){
   const handleClick = async () =>{
     setIsLoading(true);
     try {
-      const datos = {
-        "grant_type": "",
-        "username": formValues.email,
-        "password": formValues.password,
-        "scope": "",
-        "client_id": "",
-        "client_secret": ""
-      }
-
       const response = await fetch('https://nedepuserver.ddns.me:25435/api/auth/token', {
         method: 'POST',
         mode: 'cors',
         headers:{
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: JSON.stringify(datos),
+        body: new URLSearchParams({
+          "grant_type": "",
+          "username": formValues.email,
+          "password": formValues.password,
+          "scope": "",
+          "client_id": "",
+          "client_secret": ""
+        }),
       })
       
       if (!response.ok) {
         throw new Error(`Error! status: ${response}`);
       }else{
-        setState(true);
+        setIsLoading(false);
       }
 
 
