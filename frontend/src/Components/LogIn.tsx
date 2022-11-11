@@ -17,10 +17,18 @@ function LogIn(){
   const [formErrors, setFormErrors] = useState({email:"", password:""});
   const [isSubmit, setIsSubmit] = useState(false);
 
+  const [token, setToken] = useState("");
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
+
+  useEffect(() => {
+    // storing input name
+    localStorage.setItem("token", token);
+  }, [token]);
 
   const handleClick = async () =>{
     setIsLoading(true);
@@ -52,9 +60,16 @@ function LogIn(){
       console.log(formValues.email);
       console.log(formValues.password);
       // console.log(response.body)
-      console.log('result is: ', JSON.stringify(result));
+      console.log('result is: ', result.access_token);
 
+      setToken(result.access_token);
       setPost(result);
+
+      /////////
+      const saved = localStorage.getItem("token");
+      //const initialValue = JSON.parse(saved);
+      console.log(saved || "Vacio");
+
     } 
     catch (err) {
       console.log(err);
