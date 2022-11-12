@@ -22,7 +22,6 @@ const faculty = [{img: CEICT, name: 'Consejo Estudiantil de la Escuela de Ingeni
 const Home = () =>{
 
     // let navigate = useNavigate();
-
     return(
         <div>
         <NavB/>
