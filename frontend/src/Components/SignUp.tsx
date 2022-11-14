@@ -114,7 +114,6 @@ function SignUp(){
 
   const handleClick = async () =>{
     setIsLoading(true);
-    setOpen(true);
     setData("¿Desea ingresar a la página?");
     try {
       const new_user = {
@@ -122,7 +121,7 @@ function SignUp(){
         "surname": formValues.surname,
         "universityID": formValues.universityID,
         "gender": formValues.gender,
-        "dateOfBirth": format(parseISO(formValues.dateOfBirth), "yyyy-MM-dd"),
+        "dateOfBirth": "2022-11-11",
         "faculty": selected,
         "semester": formValues.semester,
         "email": formValues.email,
@@ -148,11 +147,11 @@ function SignUp(){
 
       const result = await response.json();
 
-      console.log('result is: ', JSON.stringify(result.votedIn, null, 4));
+      console.log('result is: ', JSON.stringify(result, null, 4));
 
       setPost(result);
     } catch (err) {
-      console.log('nos jodimos');
+      console.log('error');
     } finally {
       setIsLoading(false);
     }
@@ -267,7 +266,7 @@ function SignUp(){
           </form>
         </div>
 
-        <Modal isOpen={open} >
+        <Modal isOpen={state} >
           <ModalHeader>¡Se ha registrado exitosamente!</ModalHeader>
           <ModalBody>
               {data}

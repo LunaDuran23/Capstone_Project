@@ -27,11 +27,13 @@ const Formulas = ({formulas}) =>{
 
     const [open, setOpen] = useState(false);
     const [data, setData] = useState("");
+    const [choice, setChoice] = useState(-1);
 
-    const handleClick  = (item) =>{
+    const handleClick  = (item, index) =>{
         setOpen(!open);
         let f = item["president"].name + ' ' + item["president"].surname + ' y ' + item["vicepresident"].name + ' ' + item["vicepresident"].surname;
         setData(f);
+        setChoice(index);
     }
 
     const changeState = () =>{
@@ -39,6 +41,17 @@ const Formulas = ({formulas}) =>{
         setData("");
     }
     
+    const Redirect = () =>{
+        localStorage.setItem("formula", JSON.stringify(choice));
+        console.log(JSON.stringify(choice));
+        navigate('/votaciones/semestre');
+    }
+
+    const whiteVote = () =>{
+        setOpen(!open);
+        setData("Voto en Blanco");
+    }
+
     return(
         <>
         {formulas.map((item, index) => (
@@ -54,11 +67,20 @@ const Formulas = ({formulas}) =>{
               </MDBRow>
               <MDBCardBody >
                   <MDBCardTitle style={{ textAlign: 'center'}}>{item["president"].name + ' ' + item["president"].surname + ' y ' + item["vicepresident"].name + ' ' + item["vicepresident"].surname}</MDBCardTitle>
-                  <MDBBtn onClick={() => handleClick(item)} >Votar</MDBBtn>
+                  <MDBBtn onClick={() => handleClick(item, index)} >Votar</MDBBtn>
               </MDBCardBody>
           </MDBCard>
           </Grid> 
           ))}
+
+        <Grid item xs={5} > 
+              <MDBCard style={{width: '450px', height:'350px'}} className='card_h'>
+              <MDBCardBody >
+                  <MDBCardTitle style={{ textAlign: 'center', paddingBottom: '100px', paddingTop: '70px', fontSize: '40px'}}>Voto en Blanco</MDBCardTitle>
+                  <MDBBtn onClick={whiteVote}>Votar</MDBBtn>
+              </MDBCardBody>
+          </MDBCard>
+          </Grid> 
           
         <Modal isOpen={open} >
           <ModalHeader>Votaciones Formula Presidencial</ModalHeader>
@@ -66,7 +88,7 @@ const Formulas = ({formulas}) =>{
               Desea votar por la formula {data}
           </ModalBody>
           <ModalFooter>
-              <Button color='primary' onClick={() => navigate('/votaciones/semestre')}>Aceptar</Button>
+              <Button color='primary' onClick={Redirect}>Aceptar</Button>
               <Button onClick={changeState}>Cancelar</Button>
           </ModalFooter>
         </Modal>

@@ -9,6 +9,7 @@ import LogIn from './Components/LogIn';
 import SignUp from './Components/SignUp';
 import VotingFormula from './Components/VotingFormula';
 import VotingSemester from './Components/VotingSemester';
+import Results from './Components/Results';
 
 function App() {
   
@@ -37,6 +38,8 @@ function App() {
             <Route path="/economia/ListaNaranja" element={<ListInfo voting_list_id={2} name={"Naranja"}/>} />
             <Route path="/votaciones" element={<VotingFormula />} />
             <Route path="/votaciones/semestre" element={<VotingSemester/>} />
+
+            <Route path="/resultados" element={<Results />} />
         </Routes>
     </Router>
   );
