@@ -4,9 +4,11 @@ from backend.common.common import API_PREFIX, AUTH_PREFIX, USER_PREFIX, INFO_PRE
 from backend.common.types import FastAPIWithDB
 from backend.utils.unique_initialize_db import initialize_unique_indexes
 from backend.routes import auth_router, user_router, votinginforouter, votingrouter
+from backend.routes.middlewares import LimitUploadSize
 from fastapi import APIRouter
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.cors import CORSMiddleware
+
 
 globalRouter = APIRouter()
 config = dotenv_values(".env")
@@ -30,6 +32,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+# Limit uploads to 4mb
+app.add_middleware(LimitUploadSize, max_upload_size=4_000_000)
 
 
 @app.on_event("startup")
@@ -84,6 +88,7 @@ globalRouter.include_router(
 globalRouter.include_router(
     votingrouter, tags=["voting"], prefix=VOTING_PREFIX
 )
+
 app.include_router(globalRouter, prefix=API_PREFIX)
 # include static files last
 app.mount("/", StaticFiles(directory="static"), name="static")

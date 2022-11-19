@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Body, status, Depends, HTTPException
+from fastapi import APIRouter, Body, status, Depends, HTTPException, Form
 from fastapi.encoders import jsonable_encoder
 from fastapi.security import OAuth2PasswordRequestForm
 from backend.common.common import AUTH_USER_COLLECTION, JWT_ALGORITHM, TOKEN_URL, ACCESS_TOKEN_EXPIRE_MINUTES
@@ -7,20 +7,31 @@ from backend.common.types import RequestWithDB
 from backend.utils import bcrypt_hash_password, verify_hash_password
 import jwt
 from datetime import datetime, timedelta
+from fastapi import UploadFile
+from os import makedirs
+from os.path import dirname
 
 router = APIRouter()
 
 
 @router.post("/register",
              response_description="Register a new user",
-             status_code=status.HTTP_201_CREATED,
+             status_code=status.HTTP_200_OK,
              response_model=BaseResponse[UserOut],
              response_model_exclude_none=True,
              )
-def register_user(request: RequestWithDB, user: UserIn = Body(...)):
+async def register_user(request: RequestWithDB, carnet_upload: UploadFile, user: UserIn = Depends(UserIn.as_form)):
 
     # First perform any input validation (length, phone, email etc)
     # Although these should ideally be performed using pydantic validators
+
+    content, specifictype = carnet_upload.content_type.split("/")
+
+    if content != "image":
+        return BaseResponse(success=False, msg="Uploaded file must be an image!", payload=None)
+
+    if specifictype not in ["png", "jpeg"]:
+        return BaseResponse(success=False, msg="Only png images and jpg/jpeg images are supported.", payload=None)
 
     users_collection = request.app.database[AUTH_USER_COLLECTION]
 
@@ -38,7 +49,7 @@ def register_user(request: RequestWithDB, user: UserIn = Body(...)):
     # add votedIn, add hashpassword
     new_user["password"] = hashpass
     new_user["votedIn"] = []
-
+    new_user["imgPath"] = ""
     new_user = UserDB.parse_obj(new_user)  # verify model is ok
 
     res = users_collection.insert_one(
@@ -47,7 +58,25 @@ def register_user(request: RequestWithDB, user: UserIn = Body(...)):
         {"_id": res.inserted_id}
     )
 
-    # if need to do something else with it (link votes, etc)
+    if new_user is None:
+        return BaseResponse(success=False, msg="User already exists!", payload=None)
+
+    # Update imgpath
+    filebytes = await carnet_upload.read()
+    filename = res.inserted_id + "." + specifictype
+    imgpath = "privatestatic/" + filename
+
+    makedirs(dirname(imgpath), exist_ok=True)
+    with open(imgpath, 'wb') as file:
+        file.write(filebytes)
+
+    # set created img
+    users_collection.update_one(
+        {"_id": res.inserted_id},
+        {"$set": {"imgPath": imgpath}}
+    )
+
+    new_user["imgPath"] = imgpath
     new_user = UserDB.parse_obj(new_user)
 
     return BaseResponse(success=True, payload=new_user, msg=None)
