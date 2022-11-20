@@ -1,9 +1,6 @@
 import React from 'react';
 import NavB from './NavB';
-import { format, parseISO } from 'date-fns';
 import { useNavigate } from 'react-router';
-
-//import Moment from 'moment';
 
 import {
   Modal,
@@ -15,6 +12,7 @@ import {
 
 import { useState, useEffect } from "react"; 
 import './SignUp.css'
+import img from './urosario.png';
 
 
 const options = [{value: "", label: "Escoja una opción"},
@@ -29,6 +27,10 @@ function SignUp(){
   let navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [data, setData] = useState("");
+  const [selectedFile, setSelectedFile] = useState(img);
+  const [preview, setPreview] = useState();
+  //console.log(selectedFile);
+  
 
   const initialValues = { name: "", surname: "", email: "", password: "", gender: "", dateOfBirth: Date(), universityID: Number(), semester: Number()};
   const [confirm, setConfirm] = useState({password2: ""});
@@ -61,7 +63,36 @@ function SignUp(){
     setIsSubmit(true);
   };
 
+  const [base64Data, setBase64Data] = useState<string | string>('');
+
+  const handleReaderLoaded = (e) =>{
+    console.log("file uploaded 2:", e);
+    let binaryString = e.target.result;
+    console.log(binaryString);
+    //setBase64Data(btoa(binaryString));
+  }
+
+  const onSelectFile = e => {
+        //console.log(e.target.files[0]);
+        let file = e.target.files[0];
+        setSelectedFile(file);
+    }
   
+    function convertFile(files: FileList|null) {
+    if (files) {
+      const fileRef = files[0] || ""
+      const fileType: string= fileRef.type || ""
+      console.log("This file upload is of type:",fileType)
+      const reader = new FileReader()
+      reader.readAsBinaryString(fileRef)
+      reader.onload=(ev: any) => {
+        // convert it to base64
+        setBase64Data(`data:${fileType};base64,${btoa(ev.target.result)}` as string)
+      }
+    }
+  }
+
+  console.log(base64Data);
 
   const validate = (values, c) => {
     const errors = {name: "", surname: "", email:"", password:"", dateOfBirth: "", gender: "", universityID: ""};
@@ -111,12 +142,19 @@ function SignUp(){
   const[a, setA] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [state, setState] = useState(false);
+  
 
-  const handleClick = async () =>{
+  const handleClick = async (e) =>{
+    e.preventDefault();
     setIsLoading(true);
     setData("¿Desea ingresar a la página?");
+    let file = base64Data;
+    if (typeof file != undefined){
+      
+    }
     try {
       const new_user = {
+        "carnet_upload": selectedFile,
         "name": formValues.name,
         "surname": formValues.surname,
         "universityID": formValues.universityID,
@@ -128,15 +166,26 @@ function SignUp(){
         "password": formValues.password
       }
 
-      console.log(new_user);
+      const formData  = new FormData();
+      formData.append("carnet_upload", selectedFile);
+      formData.append("name", formValues.name);
+      formData.append("surname", formValues.surname);
+      formData.append("universityID", formValues.universityID.toString());
+      formData.append("gender", formValues.gender);
+      formData.append("dateOfBirth", formValues.dateOfBirth);
+      formData.append("faculty", selected.toString());
+      formData.append("semester", formValues.semester.toString());
+      formData.append("email", formValues.email);
+      formData.append("password", formValues.password);
+
+      const plainFormData = Object.fromEntries(formData.entries());
+	    const formDataJsonString = JSON.stringify(plainFormData);
+      console.log(plainFormData);
+      console.log(formDataJsonString);
 
       const response = await fetch('https://nedepuserver.ddns.me:25435/api/auth/register', {
         method: 'POST',
-        mode: 'cors',
-        headers:{
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(new_user)
+        body: formData
       })
 
       if (!response.ok) {
@@ -159,12 +208,13 @@ function SignUp(){
 
 
   useEffect(() => {
-    
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
+     if (Object.keys(formErrors).length === 0 && isSubmit) {
 
       console.log(formValues);
     }
-  }, [formValues, formErrors, isSubmit]);
+    
+   
+  }, [formValues, formErrors, isSubmit, selectedFile]);
 
 
     return (
@@ -258,8 +308,12 @@ function SignUp(){
             />
 
             <p>{formErrors.password}</p>
+
           </div>
 
+            <label style={{fontSize: '15px'}}>Carné Universidad</label><p></p>
+            <input type='file' onChange={onSelectFile}></input>
+            <br /><br />
             <div className='input-style'>
               <button onClick={handleClick}>Registrarse</button>
             </div>

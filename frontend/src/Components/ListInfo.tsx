@@ -51,13 +51,13 @@ const ListInfo = ({voting_list_id, name}) =>{
         return(<>
             <NavB />
             <div className='margin'>
-                <div className='title_list'>
+                <div className='title_list' style={{paddingBottom: '10px', fontFamily: 'Titillium-Web'}}>
                     <br />
                     <h1>Lista {name}</h1>
                     <br />
                 </div>
                 <ImageSlider candidates={data.payload} />
-                <div className='space_between'></div>
+                <br /><br />
                 <div className='title_list'>
                     <h1>Nuestras propuestas</h1>
                     <br />

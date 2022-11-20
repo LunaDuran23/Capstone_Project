@@ -1,5 +1,5 @@
 body{
-  font-family: 'PT Serif', serif;
+  font-family: "Titillium Web", sans-serif;
 }
 
 .margin_log{
@@ -9,7 +9,7 @@ body{
 }
 
 .title{
-  font-family: 'PT Serif', serif;
+  font-family: "Titillium Web", sans-serif;
 	color:black;	
   font-size: 30px;
   padding-right: 400px;
@@ -20,7 +20,7 @@ body{
 
 .input-style{
   position:relative;
-  font-family: 'PT Serif', serif;
+  font-family: "Titillium Web", sans-serif;
   font-size: 20px;
 }
 

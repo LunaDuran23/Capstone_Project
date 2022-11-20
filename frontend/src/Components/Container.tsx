@@ -8,27 +8,28 @@ import { Grid } from "@material-ui/core/";
 import './App.css';
 //import IMAGE from './/faculty_0.png';
 
-const Container = ({id_, data, facultys, route}) =>{
+const Container = ({id_, data, facultys}) =>{
 
     let navigate = useNavigate();
     
     let index = parseInt(id_);
+    console.log(index);
 
     let response = JSON.stringify(data);
+    //console.log(id_);
     
     try{
         let fac_info = JSON.parse(response).payload;
         let info = fac_info[index];
-        let path = './/'+ info.imgPath;
-       // const fasta = require(`./Components/Container2`).default;
-
+        let data = ["economia", "EICT", "jurisprudencia", "admnistracion"];
+        
         return(<>
             <Grid item xs={4} > 
-                <Card onClick={() => navigate('/' + facultys[id_] + '/' + route)} className='card_h'>
+                <Card onClick={() => navigate('/' + data[index] )} className='card_h'>
                     <Card.Img as={Image} src={'https://nedepuserver.ddns.me:25435/' + info.imgPath} fluid={true} variant='top' />
                     <Card.Body>
                         <Card.Title className='title_style'>
-                                {info.name}, {info.imgPath}
+                                {info.name}
                         </Card.Title>
                     </Card.Body>
                 </Card>

@@ -17,7 +17,7 @@ const Home = ({facultys}) =>{
         .then(data => setInfo(data))
       },[])
 
-    //console.log(faculty_info);
+    console.log(info);
 
     return(
         <div>
@@ -25,7 +25,7 @@ const Home = ({facultys}) =>{
         <div className='margin'>
             <Grid className='top' container direction={'row'} spacing={0}>
                 {Object.entries(facultys).map(([id, ]) => (
-                    <Container key={id} id_={id} data={info} facultys={facultys} route={''}/>
+                    <Container key={id} id_={id} data={info} facultys={facultys} />
                 ))} 
             </Grid>
         </div>  

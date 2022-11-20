@@ -1,5 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
+import { useState, useRef } from 'react';
+
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -11,14 +13,37 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import urosario from './urosario.png';
 
+import {
+    Modal,
+    ModalBody,
+    ModalHeader,
+    ModalFooter
+    } from 'reactstrap';
+
+import Webcam from "react-webcam";
+
 const NavB = () => {
     const token_id = localStorage.getItem('token');
+    const [open, setOpen] = useState(false);
+    const [image,setImage]= useState<string | null>(null);
+    const webcamRef = useRef<Webcam>(null);
+    const capture = React.useCallback( () => {
+        if(webcamRef.current){
+            const imageSrc = webcamRef.current.getScreenshot();
+            setImage(imageSrc)
+        }
+        
+    }, [webcamRef, setImage]);
+ 
 
     const handleClickEvent = (event) => {
         localStorage.setItem('token', '');
     };
 
-    console.log('Este es el token_id : ', token_id);
+    const changeState = () =>{
+        setOpen(!open);
+    }
+
     let navigate = useNavigate();
     if (token_id === '' || token_id === null) {
         return (
@@ -36,14 +61,20 @@ const NavB = () => {
             </Navbar>
         );
     } else {
+        const videoConstraints = {
+            width: 820,
+            height: 500,
+            facingMode: "user"
+        };
         return (
+            <>
             <Navbar fixed="top" collapseOnSelect expand="lg" variant="dark" className="color-nav">
                 <Container>
                     <Navbar.Brand href="/">
                         <img src={urosario} width="200" height="90" className="d-inline-block align-top" alt="" />
                     </Navbar.Brand>
                     <Form className="form_pos">
-                        <Button onClick={() => navigate('/votaciones')} variant="primary">
+                        <Button onClick={changeState} variant="primary">
                             Votaciones
                         </Button>{' '}
                     </Form>
@@ -55,6 +86,31 @@ const NavB = () => {
                     </Nav>
                 </Container>
             </Navbar>
+            <Modal isOpen={open} >
+                <ModalHeader>Autenticación</ModalHeader>
+                <ModalBody>
+                    {image == '' ? <Webcam
+                    audio={false}
+                    height={200}
+                    ref={webcamRef}
+                    screenshotFormat="image/jpeg"
+                    width={450}
+                    videoConstraints={videoConstraints}
+                /> : <h1></h1>}
+                </ModalBody>
+                <ModalFooter>
+                    {image != '' ?
+                    <Button onClick={() => navigate('/votaciones')}>
+                        Ir a votar</Button> :
+                    <Button onClick={(e) => {
+                        e.preventDefault();
+                        capture();
+                    }}>Captura</Button>
+                }
+                </ModalFooter>
+            </Modal>
+            </>
+            
         );
     }
 };

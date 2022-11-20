@@ -15,8 +15,8 @@ function App() {
   
   
   const facultys = {
-    0: "economia",
-    1: "EICT",
+    1: "economia",
+    0: "EICT",
     2: "jurisprudencia",
     3: "administracion" 
   };
@@ -28,14 +28,16 @@ function App() {
             <Route path="/logIn" element={<LogIn />} />
             <Route path="/signUp" element={<SignUp />} />
 
-            <Route path="/economia" element={<FacultyInfo faculty_id={0} name={'economia'}/>} />
-            <Route path="/EICT" element={<FacultyInfo faculty_id={1} name={'EICT'} />} />
+            <Route path="/EICT" element={<FacultyInfo faculty_id={0} name={'EICT'} />} />
+            <Route path="/economia" element={<FacultyInfo faculty_id={1} name={'economia'}/>} />
             <Route path="/jurisprudencia" element={<FacultyInfo faculty_id={2} name={'jurisprudencia'} />} />
             <Route path="/administracion" element={<FacultyInfo faculty_id={3} name={'administracion'} />} />
-            <Route path="/economia/ListaOliva" element={<ListInfo voting_list_id={0} name={"Oliva"}/>} />
-            <Route path="/economia/ListaRoja" element={<ListInfo voting_list_id
+
+            <Route path="/EICT/ListaOliva" element={<ListInfo voting_list_id={0} name={"Oliva"}/>} />
+            <Route path="/EICT/ListaRoja" element={<ListInfo voting_list_id
             ={1} name={"Roja"}/>} />
-            <Route path="/economia/ListaNaranja" element={<ListInfo voting_list_id={2} name={"Naranja"}/>} />
+            <Route path="/EICT/ListaNaranja" element={<ListInfo voting_list_id={2} name={"Naranja"}/>} />
+
             <Route path="/votaciones" element={<VotingFormula />} />
             <Route path="/votaciones/semestre" element={<VotingSemester/>} />
 

@@ -1,25 +1,46 @@
 import React from 'react';
 
-import { BarChart, Bar, XAxis, YAxis, Cell, CartesianGrid, Tooltip, Legend } from 'recharts';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Cell,
+  CartesianGrid,
+  Tooltip,
+  Legend
+} from "recharts";
+import Card from 'react-bootstrap/Card';
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
-const ChartVotes = ({ data }) => {
-    return (
-        <>
-            <BarChart width={900} height={400} data={data} margin={{ top: 25, right: 0, left: 0, bottom: 25 }}>
-                <Bar dataKey="votes" fontFamily="sans-serif" fill="#00a0fc">
-                    {/*data.map((entry, index) => (
+const COLORS = ["#4a5645", "#E74C3C", "#E67E22 ", "#FBFCFC "];
+
+const ChartVotes = ({data}) =>{
+    
+    return(
+        
+            <Card style={{width: '750px', height: '370px'}}>
+                    
+                    <Card.Body>
+                        <BarChart 
+                width={700}
+                height={350}
+                data={data}
+                margin={{ top: 25, right: 0, left: 0, bottom: 25 }}
+            >
+                <Bar dataKey="votes" label={true} fontFamily='sans-serif'  >
+                    {data.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % 20]} />
-                    ))*/}
-                </Bar>
-                <XAxis dataKey="name" fontFamily="sans-serif" />
-
+                    ))}
+                </Bar> 
+                <Tooltip />
+                <XAxis dataKey="name" fontFamily="sans-serif"  />
+                
                 <YAxis />
             </BarChart>
-        </>
+                    </Card.Body>
+                </Card>
     );
-};
+}
 
-// const ChartVotes = null;
-// export default ChartVotes;
+export default ChartVotes;

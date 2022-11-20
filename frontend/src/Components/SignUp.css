@@ -1,5 +1,5 @@
 body{
-  font-family: 'PT Serif', serif;
+  font-family: "Titillium Web", sans-serif;
 }
 
 input[type=number]::-webkit-inner-spin-button,
@@ -14,7 +14,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .title{
-  font-family: 'PT Serif', serif;
+  font-family: "Titillium Web", sans-serif;
 	color:black;	
   font-size: 30px;
   display: block;
@@ -24,7 +24,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .input-style{
   position: relative;
-  font-family: 'PT Serif', serif;
+  font-family: "Titillium Web", sans-serif;
   font-size: 15px;
 }
 
@@ -62,7 +62,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .two-inputs{
   position:relative;
-  font-family: 'PT Serif', serif;
+  font-family: "Titillium Web", sans-serif;
   font-size: 20px;
 }
 
@@ -95,7 +95,7 @@ input[type=number]::-webkit-outer-spin-button {
 .select{
   font-size: 15px;
   position: relative;
-  font-family: 'PT Serif', serif;
+  font-family: "Titillium Web", sans-serif;
 }
 
 .select input{
