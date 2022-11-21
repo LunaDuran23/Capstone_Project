@@ -6,14 +6,13 @@ from backend.common.types import RequestWithDB
 from typing import List
 from fastapi import Depends
 from fastapi.encoders import jsonable_encoder
-from backend.utils.outencoder import out_encoder
 from backend.data.model import (
     BaseResponse, VotingRound, VotingUrn,
     UserToken, VotingOptions, PresPair
 )
 from backend.data.model.candidate import Candidate
 from backend.routes.middlewares.auth import authenticated_user
-
+from fastapi import Form, UploadFile
 
 router = APIRouter()
 
@@ -182,7 +181,12 @@ def get_voting_options(request: RequestWithDB, user: UserToken = Depends(authent
     response_model=BaseResponse[bool],
     response_model_exclude_none=True,
 )
-def cast_vote(pres_choice: int, semester_choice: int, request: RequestWithDB, user: UserToken = Depends(authenticated_user)):
+def cast_vote(request: RequestWithDB,
+              img_verification: UploadFile,
+              pres_choice: int = Form(),
+              semester_choice: int = Form(),
+              user: UserToken = Depends(authenticated_user)):
+
     # find for user
     founduser = request.app.database[AUTH_USER_COLLECTION].find_one(
         {"email": user.email}
@@ -190,6 +194,8 @@ def cast_vote(pres_choice: int, semester_choice: int, request: RequestWithDB, us
 
     if (founduser is None):
         return BaseResponse(success=False, msg="Invalid user token", payload=None)
+
+    path_to_stored_carnet = founduser["imgPath"]
 
     # find voting rounds available
     votinground = request.app.database[VOTING_ROUND_COLLECTION].find_one(
