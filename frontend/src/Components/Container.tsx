@@ -13,7 +13,7 @@ const Container = ({id_, data, facultys}) =>{
     let navigate = useNavigate();
     
     let index = parseInt(id_);
-    console.log(index);
+   // console.log(index);
 
     let response = JSON.stringify(data);
     //console.log(id_);

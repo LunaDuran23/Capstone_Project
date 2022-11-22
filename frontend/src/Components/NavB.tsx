@@ -22,19 +22,23 @@ import {
 
 import Webcam from "react-webcam";
 
+
+
 const NavB = () => {
     const token_id = localStorage.getItem('token');
     const [open, setOpen] = useState(false);
-    const [image,setImage]= useState<string | null>(null);
+    const [image,setImage]= useState<string | string>('');
     const webcamRef = useRef<Webcam>(null);
+    const [base64, setBase64] = useState('');
     const capture = React.useCallback( () => {
         if(webcamRef.current){
             const imageSrc = webcamRef.current.getScreenshot();
-            setImage(imageSrc)
+            setImage(imageSrc as string);
+            localStorage.setItem('image', image!.toString());
         }
         
     }, [webcamRef, setImage]);
- 
+    console.log(image);
 
     const handleClickEvent = (event) => {
         localStorage.setItem('token', '');
@@ -100,7 +104,14 @@ const NavB = () => {
                 </ModalBody>
                 <ModalFooter>
                     {image != '' ?
-                    <Button onClick={() => navigate('/votaciones')}>
+                    <Button onClick={() => 
+                    {let a = image?.substring(23) as string;
+                    //console.log(a);
+                    setBase64(a);
+                    console.log(base64);
+                    localStorage.setItem('image', image);
+                    setOpen(!open);
+                    navigate('/votaciones')}}>
                         Ir a votar</Button> :
                     <Button onClick={(e) => {
                         e.preventDefault();

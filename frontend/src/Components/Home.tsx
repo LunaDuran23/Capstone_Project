@@ -17,7 +17,7 @@ const Home = ({facultys}) =>{
         .then(data => setInfo(data))
       },[])
 
-    console.log(info);
+    //console.log(info);
 
     return(
         <div>
