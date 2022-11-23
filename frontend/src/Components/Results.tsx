@@ -89,7 +89,7 @@ const Results = () =>{
     }
     console.log(faculty);
     console.log(selected);
-    
+    console.log(data);
     return(
         <>
         <NavB />

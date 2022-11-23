@@ -10,7 +10,7 @@ import './App.css';
 const VotingFormula = () =>{
   const [info, setInfo] = useState({});
   
-
+  //console.log(localStorage.getItem("token"));
     useEffect(() => {
         fetch("https://nedepuserver.ddns.me:25435/api/voting/get-voting-otpions",{
           headers: new Headers({

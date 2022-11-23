@@ -76,6 +76,8 @@ function SignUp(){
         //console.log(e.target.files[0]);
         let file = e.target.files[0];
         setSelectedFile(file);
+        console.log(e.target.files);
+        console.log(e.target.files[0]);
     }
   
     function convertFile(files: FileList|null) {
