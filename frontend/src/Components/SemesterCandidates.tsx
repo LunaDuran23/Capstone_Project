@@ -74,25 +74,31 @@ const SemesterCandidates = ({candidates}) =>{
     //console.log(f);
 
     const Voting = ()=>{
-        let formula = localStorage.getItem("formula");
+        let formula = localStorage.getItem("formula") as string;
+        console.log(formula)
         let image = localStorage.getItem("image");
         let data = `data:image/jpeg;base64,${image}`;
         //console.log(image);
         let vote = {press_choice: formula, semester_choice: choice};
+        const formData  = new FormData();
+        formData.append("img_verification", file);
+        formData.append("pres_choice", formula);
+        formData.append("semester_choice", choice.toString());
         const requestOptions = {
             method: 'POST',
             headers:  ({
                 'Accept': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem("token")
-            })
+                'Authorization': 'Bearer ' + localStorage.getItem("token"),
+            }),
+            body: formData
         };
-        fetch('https://nedepuserver.ddns.me:25435/api/voting/cast-vote?img_verification='+file+'&pres_choice='+formula+'&semester_choice='+choice, requestOptions)
+        fetch('https://nedepuserver.ddns.me:25435/api/voting/cast-vote', requestOptions)
             .then(response => response.json())
             .then(data => setRes(data));
             //console.log(data);
             console.log("HPPP");
             console.log(res);
-        //navigate('/');
+        navigate('/');
     }
 
     
