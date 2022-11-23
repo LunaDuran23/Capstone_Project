@@ -13,6 +13,7 @@ from backend.data.model import (
 from backend.data.model.candidate import Candidate
 from backend.routes.middlewares.auth import authenticated_user
 from fastapi import Form, UploadFile
+from backend.utils.face_compare import isSamePerson
 
 router = APIRouter()
 
@@ -181,11 +182,11 @@ def get_voting_options(request: RequestWithDB, user: UserToken = Depends(authent
     response_model=BaseResponse[bool],
     response_model_exclude_none=True,
 )
-def cast_vote(request: RequestWithDB,
-              img_verification: UploadFile,
-              pres_choice: int = Form(),
-              semester_choice: int = Form(),
-              user: UserToken = Depends(authenticated_user)):
+async def cast_vote(request: RequestWithDB,
+                    img_verification: UploadFile,
+                    pres_choice: int = Form(),
+                    semester_choice: int = Form(),
+                    user: UserToken = Depends(authenticated_user)):
 
     # find for user
     founduser = request.app.database[AUTH_USER_COLLECTION].find_one(
@@ -194,8 +195,6 @@ def cast_vote(request: RequestWithDB,
 
     if (founduser is None):
         return BaseResponse(success=False, msg="Invalid user token", payload=None)
-
-    path_to_stored_carnet = founduser["imgPath"]
 
     # find voting rounds available
     votinground = request.app.database[VOTING_ROUND_COLLECTION].find_one(
@@ -209,7 +208,20 @@ def cast_vote(request: RequestWithDB,
 
     # check if user has already voted in this round
     if round.id in founduser["votedIn"]:
-        return BaseResponse(success=False, msg="User has already voted!", payload=None)
+        return BaseResponse(success=False, msg="El usuario ya ha votado anteriormente!", payload=None)
+
+    # perform image verifications
+    path_to_stored_carnet = founduser["imgPath"]
+    given_img = await img_verification.read()
+
+    with open('privatestatic/temp.png', 'wb') as file:
+        file.write(given_img)
+
+    try:
+        if not isSamePerson(path_to_stored_carnet, 'privatestatic/temp.png'):
+            return BaseResponse(success=False, msg="Verificación facial incorrecta!", payload=None)
+    except BaseException as ex:
+        print("Exception caught: ", ex)
 
     urns_collection = request.app.database[VOTING_URNS_COLLECTION]
     pres_urn = urns_collection.find_one({"_id": str(round.presidential_urn)})
