@@ -98,6 +98,8 @@ def get_voting_results(round_id: int, request: RequestWithDB):
                 return BaseResponse(success=False, payload=None, msg="Failed to get urn results!")
             urnlist.append(
                 {'name': candidate['name'] + ' ' + candidate['surname'], 'votes': votecount})
+        urnlist.append({'name': "Voto en Blanco",
+                       'votes': found_urn["blankVotes"]})
         return urnlist
 
     resp_dict = {}
@@ -113,7 +115,6 @@ def get_voting_results(round_id: int, request: RequestWithDB):
     resp_dict["Septimo Semestre"] = urn_to_list(
         voting_urn['semestral_urns'][6])
     resp_dict["Octavo Semestre"] = urn_to_list(voting_urn['semestral_urns'][7])
-
     return BaseResponse(success=True, msg="", payload=resp_dict)
 
 
