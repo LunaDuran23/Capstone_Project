@@ -67,5 +67,6 @@
   "license": "ISC",
   "devDependencies": {
     "react-scripts": "^5.0.1"
-  }
+  },
+  "homepage":"."
 }

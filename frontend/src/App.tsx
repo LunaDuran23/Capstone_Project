@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 
 import FacultyInfo from './Components/FacultyInfo';
 import ListInfo from './Components/ListInfo';
@@ -14,15 +14,15 @@ import VotingSemester from './Components/VotingSemester';
 import Results from './Components/Results';
 
 function App() {
-  
-  
+
+
   const facultys = {
     1: "economia",
     0: "EICT",
     2: "jurisprudencia",
-    3: "administracion" 
+    3: "administracion"
   };
-  
+
   return (
     <Router>
         <Routes>

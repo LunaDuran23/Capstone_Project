@@ -91,4 +91,4 @@ globalRouter.include_router(
 
 app.include_router(globalRouter, prefix=API_PREFIX)
 # include static files last
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/", StaticFiles(directory="static"), name="static")
