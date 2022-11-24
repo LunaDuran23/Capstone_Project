@@ -13,7 +13,7 @@ import {
 import Card from 'react-bootstrap/Card';
 
 
-const COLORS = ["#4a5645", "#E74C3C", "#E67E22 ", "#FBFCFC "];
+const COLORS = ["#4a5645", "#E74C3C", "#E67E22 ", "#707B7C"];
 
 const ChartVotes = ({data}) =>{
     

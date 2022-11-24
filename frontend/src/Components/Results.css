@@ -1,0 +1,12 @@
+.input_style select{
+  height: 40px;
+  width: 200px;
+  background-color: #E3E7E9;
+  font-size: 15px;
+  padding: 4px 20px 0;
+  border:0;
+  border-bottom:1px solid #555;  
+  padding-left: 10px;
+  font-size:15px;
+  color:black;
+}

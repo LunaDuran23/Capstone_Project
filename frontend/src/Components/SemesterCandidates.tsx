@@ -75,7 +75,7 @@ const SemesterCandidates = ({candidates}) =>{
 
     const Voting = ()=>{
         let formula = localStorage.getItem("formula") as string;
-        console.log(formula)
+        //console.log(formula)
         let image = localStorage.getItem("image");
         let data = `data:image/jpeg;base64,${image}`;
         //console.log(image);
@@ -96,9 +96,20 @@ const SemesterCandidates = ({candidates}) =>{
             .then(response => response.json())
             .then(data => setRes(data));
             //console.log(data);
-            console.log("HPPP");
-            console.log(res);
-        navigate('/');
+            //console.log(res);
+            let response = JSON.stringify(res);
+            let final = JSON.parse(response);
+            console.log(final);
+            if (Object.keys(final).length === 0) {
+                console.log('...');
+            }else{
+                if(final.success === true){
+                    navigate('/');
+                }if(final.success != true){
+                    alert(final.msg);
+                }
+            }
+        
     }
 
     

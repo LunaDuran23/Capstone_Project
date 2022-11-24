@@ -21,7 +21,7 @@ const Container = ({id_, data, facultys}) =>{
     try{
         let fac_info = JSON.parse(response).payload;
         let info = fac_info[index];
-        let data = ["economia", "EICT", "jurisprudencia", "admnistracion"];
+        let data = ["economia", "EICT", "jurisprudencia", "administracion"];
         
         return(<>
             <Grid item xs={4} > 

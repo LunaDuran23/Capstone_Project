@@ -16,8 +16,8 @@ import img from './urosario.png';
 
 
 const options = [{value: "", label: "Escoja una opción"},
-                {value: 0, label: "Facultad de Economia"},
-                {value: 1, label: 'Escuela de Ingeniería, Ciencia y Tecnología'},
+                {value: 0, label: "Escuela de Ingeniería, Ciencia y Tecnología"},
+                {value: 1, label: 'Facultad de Economia'},
                 {value: 2, label: 'Facultad de Jurisprudencia'},
                 {value: 3, label: 'Facultad de Administración'}];
 

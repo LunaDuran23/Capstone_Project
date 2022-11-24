@@ -33,6 +33,7 @@ body {
 
 .title_list{
   text-align: center;
+  font-family: "Titillium Web", sans-serif
 }
 
 .btn-primary {
@@ -58,6 +59,13 @@ body {
 .margin{
   font-family: "Titillium Web", sans-serif;
   margin-top: 90px;
+  margin-left: 80px;
+  margin-right: 80px;
+}
+
+.margin_default{
+  font-family: "Titillium Web", sans-serif;
+  margin-top: 100px;
   margin-left: 80px;
   margin-right: 80px;
 }
