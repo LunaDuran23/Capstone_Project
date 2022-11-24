@@ -9,7 +9,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { NavLink } from 'react-router-dom';
 import './App.css';
 import urosario from './urosario.png';
 
@@ -36,7 +36,7 @@ const NavB = () => {
             setImage(imageSrc as string);
             localStorage.setItem('image', image!.toString());
         }
-        
+
     }, [webcamRef, setImage]);
     console.log(image);
 
@@ -57,9 +57,9 @@ const NavB = () => {
                         <img src={urosario} width="200" height="90" className="d-inline-block align-top" alt="" />
                     </Navbar.Brand>
                     <Nav>
-                        <Nav.Link href="/resultados">Consultar Resultados</Nav.Link>
-                        <Nav.Link href="/logIn">Log In</Nav.Link>
-                        <Nav.Link href="/signUp">Sign Up</Nav.Link>
+                        <Nav.Link><NavLink to="/resultados">Consultar Resultados</NavLink></Nav.Link>
+                        <Nav.Link><NavLink to="/logIn">Log In</NavLink></Nav.Link>
+                        <Nav.Link><NavLink to="/signUp">Sign Up</NavLink></Nav.Link>
                     </Nav>
                 </Container>
             </Navbar>
@@ -83,7 +83,7 @@ const NavB = () => {
                         </Button>{' '}
                     </Form>
                     <Nav>
-                        <Nav.Link href="/resultados">Consultar Resultados</Nav.Link>
+                        <Nav.Link><NavLink to="/resultados">Consultar Resultados</NavLink></Nav.Link>
                         <Nav.Link href="/" onClick={handleClickEvent}>
                             Log Out
                         </Nav.Link>
@@ -104,7 +104,7 @@ const NavB = () => {
                 </ModalBody>
                 <ModalFooter>
                     {image != '' ?
-                    <Button onClick={() => 
+                    <Button onClick={() =>
                     {let a = image?.substring(23) as string;
                     //console.log(a);
                     setBase64(a);
@@ -121,7 +121,7 @@ const NavB = () => {
                 </ModalFooter>
             </Modal>
             </>
-            
+
         );
     }
 };
